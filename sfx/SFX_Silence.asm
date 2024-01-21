@@ -1,0 +1,25 @@
+SFX_PulseSilence:
+SFX_NoiseSilence:
+SFX_PulseSilence2:
+SFX_NoiseSilence2:
+SFX_PulseSilence3:
+SFX_NoiseSilence3:
+SFX_PulseSilence4:
+SFX_NoiseSilence4:
+SFX_PulseSilence5:
+SFX_NoiseSilence5:
+SFX_PulseSilence6:
+SFX_NoiseSilence6:
+SFX_PulseSilence7:
+SFX_NoiseSilence7:
+SFX_PulseSilence8:
+SFX_NoiseSilence8:
+SFX_PulseSilence9:
+SFX_NoiseSilence9:
+SFX_PulseSilence10:
+SFX_NoiseSilence10:
+SFX_PulseSilence11:
+SFX_NoiseSilence11:
+SFX_PulseSilence12:
+SFX_NoiseSilence12:
+    db $00

@@ -1,0 +1,11 @@
+*.o
+*.exe
+*.bin
+*.o
+*.gbs
+*.dll
+*.lps
+lib/
+backup/
+
+conv

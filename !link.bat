@@ -1,0 +1,1 @@
+rgblink test.o -o test.bin

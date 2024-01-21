@@ -1,0 +1,263 @@
+╔═════════════════════════════════╗
+║ Rockman World 2 Sequence Format ║
+╚═════════════════════════════════╝
+       Pale Moon 1/19/2024
+  With help from Forple and Pegmode
+
+┌──────────────────────────────────┐
+│ RMW2 Audio Driver Page Structure │
+└──────────────────────────────────┘
+    For reference
+
+    0-4DB     : Driver Code
+    4DC-4E9   : Frequency Table Octave Pointers
+    4EA-591   : Frequency Table
+    592-5D1   : BGM Pointer Table
+    5D2-651   : SFX Pointer Table
+    652-691   : BGM Wavetable Pointers
+    692-6D1   : Wavetables (16 bytes each)
+    6D2-6DD   : Noise Pitch Set
+    6DE-3056  : BGM data
+    3057-3076 : SFX Priority Table(?)
+    3077-3445 : SFX data
+    3466-3FFF : Padding (all $FF)
+
+┌───────────────────────────┐
+│ Rabbit GB Frequency Table │
+└───────────────────────────┘
+    For reference
+
+    C    C#   D    D#   E    F    F#   G    G#   A    A#   B
+    2C00 9D00 0701 6B01 C901 2202 7702 C702 1203 5803 9B03 DA03 : 2
+    1604 4E04 8304 B504 E504 1105 3B05 6305 8905 AC05 CE05 ED05 : 3
+    0B06 2706 4206 5B06 7206 8906 9E06 B206 C406 D606 E706 F706 : 4
+    0607 0F07 2107 2D07 3907 4407 4F07 5907 6207 6B07 7307 7B07 : 5
+    8307 8A07 9007 9707 9D07 A207 A707 AC07 B107 B607 BA07 BE07 : 6
+    C107 C507 C807 CB07 CE07 D107 D407 D607 D907 DA07 DD07 DF07 : 7
+    E107 E207 E407 E607 E707 E907 EA07 EB07 EC07 ED07 EE07 EF07 : 8
+
+╔═════════════════════════════════╗
+║            COMMANDS             ║
+╚═════════════════════════════════╝
+
+┌──────────────┐
+│ Note Command │
+└──────────────┘
+High Nybble: 0-B (Notes/Noise Pitch)
+----ON PULSE+WAVE
+    0 : C-
+    1 : C#
+    2 : D-
+    3 : D#
+    4 : E-
+    5 : F-
+    6 : F#
+    7 : G-
+    8 : G#
+    9 : A-
+    A : A#
+    B : B-
+----ON NOISE (Pitch equivelant from Trackerboy)
+    0 : A#6 V00
+    1 : A-6 V00
+    2 : G-6 V00
+    3 : D#6 V00
+    4 : B-5 V00
+    5 : G-5 V00
+    6 : G-6 V01
+    7 : D#6 V01
+    8 : D#6 V01
+    9 : B-5 V01
+    A : B-5 V01
+    B : G-5 V01
+
+Low Nybble: Note length
+    0 = 128 Frames
+    1 = 64  Frames
+    2 = 32  Frames
+    3 = 16  Frames
+    4 = 8   Frames
+    5 = 4   Frames
+    6 = 2   Frames
+    7 = 1   Frame
+    8 = 192 Frames
+    9 = 96  Frames
+    A = 48  Frames
+    B = 24  Frames
+    C = 12  Frames
+    D = 6   Frames
+    E = 3   Frames
+    F = 1   Frame
+
+┌─────────────────┐
+│ Cx : Effect Set │
+└─────────────────┘
+    Some effects are independant while others read one
+    or two bytes after, the ones that do will be specified
+─────────────────────────────────────────────────────────
+C0 : Timer speed (1 byte) [PULSE 1 ONLY]
+    (how the GB timer functions exactly to be written)
+	Changes how fast the song processes note lengths
+    and delays
+
+    $BB is closest to 60hz and is recommended for custom
+    song hacks
+─────────────────────────────────────────────────────────
+C1 : Set duty cycle or wave/noise cutoff (1 byte)
+----Pulse
+    00-3F = 12.5%
+    40-7F = 25%
+    80-BF = 50%
+    C0-FF = 75%
+    (RMW2 sticks with 00, 40, 80 and
+     C0 for duty cycles accordingly)
+
+----Wave/Noise cutoff
+    00 = Longest Cutoff
+    FF = Shortest Cutoff
+─────────────────────────────────────────────────────────
+C2 : Base volume and fade (1 byte)
+----Pulses+Noise
+    Low Nybble = Base volume (0-F)
+    High Nybble = Fade (0/8=Nothing, 1-7=Fadeouts, 9-F=Fadeins)
+
+----Wave Volume
+    00-1F, 80-9F = Off
+    20-3F, A0-BF = Max
+    40-5F, C0-DF = Mid
+    60-7F, E0-FF = Low
+    (RMW2 sticks with 00, 20,
+      40 and 60 accordingly)
+─────────────────────────────────────────────────────────
+C3 : Jump (2 bytes)
+    Unconditional jump to an offset (or Label in src)
+
+    Conveniently, C3 is the JP opcode on Game Boy hardware,
+    so you can simply put down JP in the src and assemblers
+    will translate it as C3
+─────────────────────────────────────────────────────────
+C4 : Panning [PULSE 1 ONLY]
+    High Nybble = Left speaker
+    Low Nybble = Right speaker
+
+        Left        Right
+      0 0 0 0      0 0 0 0
+     / /  | |      | |  \ \
+   NS WV P2 P1    NS WV P2 P1
+
+    Pans channels, SFX are also panned instead of corrected
+    (which is likely why all tracks are set to mono [$FF])
+    If a bit for a channel is set on both sides, the channel is
+	centered instead
+    If no bits for a channel are set, then it's silent
+─────────────────────────────────────────────────────────
+C9 : Return from subroutine
+Returns from CD (see below) and continues the sequence where it left off
+
+    Conveniently, C9 is the RET opcode on Game Boy hardware,
+    so you can simply put down RET in the src and assemblers
+    will translate it as C9
+─────────────────────────────────────────────────────────
+CD : Jump to subroutine (2 bytes)
+
+    Jumps to a sub-sequence offset (or Label in src), used to save space
+    Sub-sequences are usually located at the end of one channel's sequence 
+    (typically after a C3 jump) and end with C9 (return)
+
+    Conveniently, CD is the CALL opcode on Game Boy hardware,
+    so you can simply put down CALL in the src and assemblers
+    will translate it as CD
+─────────────────────────────────────────────────────────
+CE : Channel stop
+    Stops processing a channel that runs this effect,
+    nonlooping songs will place this at the end of all
+    four channel sequences
+─────────────────────────────────────────────────────────
+C5-C7, CA-CC, CF : Unofficial Channel Stop
+    These commands exhaust Effect handling with no results
+    and breaks the channel's sequence from playing
+
+┌───────────────┐
+│ Wait Commands │
+└───────────────┘
+Dx : Wait
+    Inserts extra frames between notes, can be chained together
+
+Ex : Silence
+    Same as Dx, but also silences the channel (essentially a note cut)
+
+    0 = 128 Frames
+    1 = 64  Frames
+    2 = 32  Frames
+    3 = 16  Frames
+    4 = 8   Frames
+    5 = 4   Frames
+    6 = 2   Frames
+    7 = 1   Frame
+    8 = 192 Frames
+    9 = 96  Frames
+    A = 48  Frames
+    B = 24  Frames
+    C = 12  Frames
+    D = 6   Frames
+    E = 3   Frames
+    F = 1   Frame
+
+┌────────────────┐
+│ Octave Command │
+└────────────────┘
+Fx : Octave Select
+    1 = Lowest
+    7 = Highest
+
+    0, 8-F play broken notes
+
+╔════════════════════════════════╗
+║      SOUND EFFECT FORMAT       ║
+╚════════════════════════════════╝
+Only Pulse 2 and Noise are used for sound effects
+(Pulse 1 and Wave lack their own SFX handling code entirely)
+
+Format : wx yz ## ##
+
+----w = Duty cycle+Base speed
+    (how "base speed" works to be written, RMW2 only uses the "normal" ones)
+    0 = 12.5%, normal
+    1 = 12.5%, slow
+    2 = 12.5%, slower
+    3 = 12.5%, slowest
+    4 = 25%, normal
+    5 = 25%, slow
+    6 = 25%, slower
+    7 = 25%, slowest
+    8 = 50%, normal
+    9 = 50%, slow
+    A = 50%, slower
+    B = 50%, slowest
+    C = 75%, normal
+    D = 75%, slow
+    E = 75%, slower
+    F = 75%, slowest
+    [NOISE] The speed changes but the duty does not (as duty is handled by the polynomial)
+
+----x = How long a pitch lasts in frames
+    0, 1-F are valid
+        0 = 16 Frames(?)
+        1 = 1  Frame
+        2 = 2  Frames
+        etc..
+        E = 14 Frames
+        F = 15 Frames
+
+----yz = Base volume and fade
+    Works the same way as the byte C2 reads for music
+
+----## ## = Desired pitch	
+[PULSE 2] Any of the valid GB channel frequencies (in native hardware little-endian format)
+[ NOISE ] The first byte can be any polynomial while the second byte is ignored (left as $00)
+
+NOTE:
+All sound effects are given a priority relative to their ID according to a list (currently listed
+as "unknown_table" in driver.asm in the src)
+It has not yet been examined in detail but it's presumed the higher the number, the more priority
+e.g $08 > $05 so SFX with priority $08 will replace a sound with priority $05 if one was playing
