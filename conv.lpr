@@ -90,6 +90,11 @@ type
     function ReadLString: String;
   end;
 
+  TWait = record
+    Code: String;
+    Frames: Integer;
+  end;
+
   //https://github.com/stoneface86/libtrackerboy/blob/bf4993d53bc34691ca75819a96d3d00b3b699dea/src/trackerboy/data.nim#L111
   TTBMEffectType = (
     etNoEffect = 0,         // No effect, this effect column is unset.
@@ -125,6 +130,25 @@ const
     etAutoPortamento,
     etVibrato
   ];
+
+  Waits: array of TWait = (
+    (Code: '8'; Frames: 192),
+    (Code: '0'; Frames: 128),
+    (Code: '9'; Frames: 96),
+    (Code: '1'; Frames: 64),
+    (Code: 'A'; Frames: 48),
+    (Code: '2'; Frames: 32),
+    (Code: 'B'; Frames: 24),
+    (Code: '3'; Frames: 16),
+    (Code: 'C'; Frames: 12),
+    (Code: '4'; Frames: 8),
+    (Code: 'D'; Frames: 6),
+    (Code: '5'; Frames: 4),
+    (Code: 'E'; Frames: 3),
+    (Code: '6'; Frames: 2),
+    (Code: '7'; Frames: 1),
+    (Code: 'F'; Frames: 1)
+  );
 
 function TStreamHelper.ReadLString: String;
 var
@@ -166,39 +190,80 @@ var
   Pat: PPattern;
   Patterns: TPatternMap;
 
+  procedure Wait(Rows: Integer);
+  var
+    Frames: Integer;
+    W: TWait;
+  begin
+    Frames := Rows * 3;
+
+    while Frames > 0 do begin
+      for W in Waits do
+        if W.Frames <= Frames then begin
+          Dec(Frames, W.Frames);
+          Writeln(F, ' wait $'+W.Code);
+          Break;
+        end;
+    end;
+  end;
+
   procedure Emit(Ch: Integer);
   var
-    SL: TStringList;
     Octave, Note: Integer;
+    FX: TTBMEffect;
+    Waited: Integer = 0;
   begin
-    SL := TStringList.Create;
-    SL.Delimiter:=',';
-    for I := Low(OrderMatrix[Ch]) to High(OrderMatrix[Ch]) do begin
+    for I := Low(OrderMatrix[Ch]) to High(OrderMatrix[Ch])-1 do begin
+      writeln(F, '; pattern break');
       Pat := FetchPattern(Patterns, OrderMatrix[Ch, I]);
 
       for Row in Pat^ do begin
+        for FX in Row.Effects do begin
+          case TTBMEffectType(FX.EffectType) of
+            etSetEnvelope: Writeln(F, ' envelope $', IntToHex(FX.Param, 2));
+            etSetTimbre: begin
+              if Ch = 2 then
+                case FX.Param of
+                  0: Writeln(F, ' wave_vol $00');
+                  1: Writeln(F, ' wave_vol $60');
+                  2: Writeln(F, ' wave_vol $40');
+                  3: Writeln(F, ' wave_vol $20');
+                end
+              else
+                case FX.Param of
+                  0: Writeln(F, ' duty_cycle $00');
+                  1: Writeln(F, ' duty_cycle $40');
+                  2: Writeln(F, ' duty_cycle $80');
+                  3: Writeln(F, ' duty_cycle $C0');
+                end;
+            end;
+          end;
+        end;
         if Row.Note = 0 then
-          SL.Add('$DE')
+          Inc(Waited)
+          //Writeln(F, ' wait $E')
+        else if Row.Note = 85 then
+          Inc(Waited)
         else begin
-          Octave := ((Row.Note - 1) div 12)+1;
+          if Waited > 0 then begin
+            Wait(Waited);
+            Waited := 0;
+          end;
           Note := (Row.Note - 1) mod 12;
+          Octave := EnsureRange(((Row.Note - 1) div 12)+1, 1, 7);
 
-          if Ch = 2 then Dec(Octave);
-          //Octave := EnsureRange(Octave, 1, 7);
-
-          writeln(octave);
-          SL.Add('$F'+IntToHex(Octave, 1));
-          SL.Add('$'+IntToHex(Note, 1)+'E');
+          Writeln(F, ' octave $'+IntToHex(Octave, 1));
+          Writeln(F, ' note $'+IntToHex(Note, 1)+'E');
         end;
       end;
     end;
 
-    WriteLn(F, 'db '+SL.DelimitedText);
-    SL.Free;
+    if Waited > 0 then
+      Wait(Waited);
   end;
 
 begin
-  Stream := TFileStream.Create('gb2_digic_simple.tbm', fmOpenRead);
+  Stream := TFileStream.Create('gb2_digic.tbm', fmOpenRead);
 
   Stream.ReadBuffer(Header, SizeOf(TTBMHeader));
 
@@ -232,6 +297,7 @@ begin
     Stream.ReadBuffer(TrackFormat, SizeOf(TTBMTrackFormat));
 
     New(Pat);
+    Pat^ := Default(TPattern);
     for J := 0 to TrackFormat.Rows do begin
       Stream.ReadBuffer(RowFormat, SizeOf(TTBMRowFormat));
       Pat^[RowFormat.RowNo] := RowFormat.RowData;
@@ -251,19 +317,22 @@ begin
   writeln(F, 'dw BGM_Title_Noise');
 
   writeln(F, 'BGM_Title_Pulse1:');
-  writeln(F, 'db $C4,$FF,$C0,$BB,$C1,$80,$C2,$83');
-  {Emit(0);} writeln(F, 'db $D5');
+  writeln(F, 'db $C4,$FF,$C0,$BB');
+  Emit(0);
+  writeln(F, 'db $CE');
 
   writeln(F, 'BGM_Title_Pulse2:');
-  //writeln(F, 'db $C1,$40,$C2,$83');
-  {Emit(1);} writeln(F, 'db $D5');
+  Emit(1);
+  writeln(F, 'db $CE');
 
   writeln(F, 'BGM_Title_Wave:');
-  writeln(F, 'db $C1,$80,$C2,$20,$F1');
-  Emit(2); {writeln(F, 'db $D5');}
+  writeln(F, 'db $C1,$D5');
+  Emit(2);
+  writeln(F, 'db $CE');
 
   writeln(F, 'BGM_Title_Noise:');
-  {Emit(3);} writeln(F, 'db $D5');
+  //Emit(3);
+  writeln(F, 'db $CE');
 
   Close(F);
 end.
