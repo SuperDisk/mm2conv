@@ -4,6 +4,7 @@
 *.o
 *.gbs
 *.dll
+*.wav
 *.lps
 lib/
 backup/

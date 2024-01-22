@@ -12,25 +12,19 @@ db $C4,$FF,$C0,$BB
  note $3E
  wait $4
  wait $7
- octave $3
  note $6E
  wait $4
  wait $7
- octave $3
  note $BE
  wait $4
  wait $7
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $5E
  wait $E
- octave $3
  note $5E
  wait $E
- octave $3
  note $8E
  wait $E
  octave $4
@@ -40,13 +34,10 @@ db $C4,$FF,$C0,$BB
  octave $3
  note $8E
  wait $E
- octave $3
  note $5E
  wait $E
- octave $3
  note $3E
  wait $E
- octave $3
  note $3E
  wait $E
  octave $2
@@ -73,49 +64,37 @@ db $C4,$FF,$C0,$BB
  octave $3
  note $8E
  wait $E
- octave $3
  note $6E
  wait $4
  wait $7
- octave $3
  note $5E
  wait $4
  wait $7
- octave $3
  note $6E
  wait $E
- octave $3
  note $8E
  wait $E
- octave $3
  note $AE
 ; pattern break
+ wait $E
  envelope $82
  duty_cycle $40
- wait $E
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $6E
  wait $4
  wait $7
- octave $3
  note $BE
  wait $4
  wait $7
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $5E
  wait $E
- octave $3
  note $5E
  wait $E
- octave $3
  note $8E
  wait $E
  octave $4
@@ -125,13 +104,10 @@ db $C4,$FF,$C0,$BB
  octave $3
  note $8E
  wait $E
- octave $3
  note $5E
  wait $E
- octave $3
  note $3E
  wait $E
- octave $3
  note $3E
  wait $E
  octave $2
@@ -158,7 +134,6 @@ db $C4,$FF,$C0,$BB
  octave $3
  note $8E
  wait $E
- octave $3
  note $6E
  wait $4
  wait $7
@@ -169,38 +144,29 @@ db $C4,$FF,$C0,$BB
  octave $3
  note $AE
  wait $E
- octave $3
  note $6E
  wait $E
- octave $3
  note $3E
 ; pattern break
+ wait $E
  envelope $82
  duty_cycle $40
- wait $E
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $6E
  wait $4
  wait $7
- octave $3
  note $BE
  wait $4
  wait $7
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $5E
  wait $E
- octave $3
  note $5E
  wait $E
- octave $3
  note $8E
  wait $E
  octave $4
@@ -210,13 +176,10 @@ db $C4,$FF,$C0,$BB
  octave $3
  note $8E
  wait $E
- octave $3
  note $5E
  wait $E
- octave $3
  note $3E
  wait $E
- octave $3
  note $3E
  wait $E
  octave $2
@@ -243,49 +206,37 @@ db $C4,$FF,$C0,$BB
  octave $3
  note $8E
  wait $E
- octave $3
  note $6E
  wait $4
  wait $7
- octave $3
  note $5E
  wait $4
  wait $7
- octave $3
  note $6E
  wait $E
- octave $3
  note $8E
  wait $E
- octave $3
  note $AE
 ; pattern break
+ wait $E
  envelope $82
  duty_cycle $40
- wait $E
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $6E
  wait $4
  wait $7
- octave $3
  note $BE
  wait $4
  wait $7
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $5E
  wait $E
- octave $3
  note $5E
  wait $E
- octave $3
  note $8E
  wait $E
  octave $4
@@ -295,19 +246,14 @@ db $C4,$FF,$C0,$BB
  octave $3
  note $8E
  wait $E
- octave $3
  note $5E
  wait $E
- octave $3
  note $3E
  wait $E
- octave $3
  note $1E
  wait $E
- octave $3
  note $6E
  wait $E
- octave $3
  note $BE
  wait $E
  octave $4
@@ -316,68 +262,58 @@ db $C4,$FF,$C0,$BB
  octave $3
  note $BE
  wait $E
- octave $3
  note $1E
  wait $E
  octave $4
  note $1E
  wait $E
- octave $4
  note $5E
  wait $E
- octave $4
  note $6E
  wait $E
- octave $4
  note $1E
  wait $E
  octave $3
  note $BE
  wait $E
- octave $3
  note $AE
  wait $E
- octave $3
  note $8E
  wait $E
- octave $3
  note $6E
  wait $E
- octave $3
  note $1E
  wait $E
  octave $2
  note $6E
 ; pattern break
+ wait $E
+ silence $E
+ wait $3
+ wait $5
+ wait $7
  envelope $87
  duty_cycle $40
- wait $B
- wait $E
  octave $3
  note $1E
  wait $3
  wait $5
  wait $7
- octave $3
  note $1E
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
  wait $3
  wait $5
  wait $7
- octave $3
  note $5E
  wait $3
  wait $5
  wait $7
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $1E
  wait $3
  wait $5
@@ -385,17 +321,15 @@ db $C4,$FF,$C0,$BB
  octave $2
  note $BE
 ; pattern break
- envelope $87
- duty_cycle $40
  wait $A
  wait $4
  wait $7
- octave $2
+ envelope $87
+ duty_cycle $40
  note $AE
  wait $3
  wait $5
  wait $7
- octave $2
  note $AE
  wait $3
  wait $5
@@ -405,66 +339,54 @@ db $C4,$FF,$C0,$BB
  wait $3
  wait $5
  wait $7
- octave $3
  note $1E
  wait $3
  wait $5
  wait $7
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $1E
  wait $2
  wait $C
  wait $7
- octave $3
  note $1E
 ; pattern break
+ wait $4
+ wait $7
  envelope $87
  duty_cycle $40
- wait $4
- wait $7
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $5E
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
  wait $2
  wait $C
  wait $7
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $1E
  wait $4
  wait $7
- octave $3
  note $5E
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
  wait $2
  wait $C
  wait $7
- octave $3
  note $1E
 ; pattern break
+ wait $4
+ wait $7
  envelope $87
  duty_cycle $40
- wait $4
- wait $7
  octave $2
  note $BE
  wait $4
@@ -474,7 +396,6 @@ db $C4,$FF,$C0,$BB
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
  wait $2
  wait $7
@@ -488,130 +409,113 @@ db $C4,$FF,$C0,$BB
  wait $3
  wait $5
  wait $7
- octave $3
  note $1E
- wait $4
- wait $7
- octave $3
+ wait $E
+ silence $E
+ wait $E
  note $1E
 ; pattern break
- envelope $87
- duty_cycle $80
- wait $1
- wait $3
- wait $7
- octave $3
- note $1E
- wait $3
- wait $5
- wait $7
- octave $3
- note $1E
- wait $3
- wait $5
- wait $7
- octave $3
- note $6E
- wait $3
- wait $5
- wait $7
- octave $3
- note $5E
- wait $3
- wait $5
- wait $7
- octave $3
- note $3E
- wait $4
- wait $7
- octave $3
- note $1E
- wait $3
- wait $5
- wait $7
- octave $2
- note $BE
-; pattern break
- envelope $87
- duty_cycle $80
  wait $A
  wait $4
  wait $7
- octave $2
- note $AE
+ silence $E
  wait $3
  wait $5
  wait $7
- octave $2
- note $AE
- wait $3
- wait $5
- wait $7
- octave $3
- note $3E
- wait $3
- wait $5
- wait $7
- octave $3
- note $1E
- wait $3
- wait $5
- wait $7
- octave $3
- note $3E
- wait $4
- wait $7
- octave $3
- note $1E
- wait $2
- wait $C
- wait $7
- octave $3
- note $1E
-; pattern break
  envelope $87
  duty_cycle $80
- wait $4
+ note $1E
+ wait $3
+ wait $5
  wait $7
- octave $3
- note $3E
- wait $4
+ note $1E
+ wait $3
+ wait $5
  wait $7
- octave $3
+ note $6E
+ wait $3
+ wait $5
+ wait $7
  note $5E
  wait $3
  wait $5
  wait $7
- octave $3
- note $6E
- wait $2
- wait $C
- wait $7
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $1E
+ wait $3
+ wait $5
+ wait $7
+ octave $2
+ note $BE
+; pattern break
+ wait $A
  wait $4
  wait $7
- octave $3
- note $5E
+ envelope $87
+ duty_cycle $80
+ note $AE
+ wait $3
+ wait $5
+ wait $7
+ note $AE
  wait $3
  wait $5
  wait $7
  octave $3
+ note $3E
+ wait $3
+ wait $5
+ wait $7
+ note $1E
+ wait $3
+ wait $5
+ wait $7
+ note $3E
+ wait $4
+ wait $7
+ note $1E
+ wait $2
+ wait $C
+ wait $7
+ note $1E
+; pattern break
+ wait $4
+ wait $7
+ envelope $87
+ duty_cycle $80
+ note $3E
+ wait $4
+ wait $7
+ note $5E
+ wait $3
+ wait $5
+ wait $7
  note $6E
  wait $2
  wait $C
  wait $7
- octave $3
- note $1E
-; pattern break
- envelope $87
- duty_cycle $80
+ note $3E
  wait $4
  wait $7
+ note $1E
+ wait $4
+ wait $7
+ note $5E
+ wait $3
+ wait $5
+ wait $7
+ note $6E
+ wait $2
+ wait $C
+ wait $7
+ note $1E
+; pattern break
+ wait $4
+ wait $7
+ envelope $87
+ duty_cycle $80
  octave $2
  note $BE
  wait $4
@@ -621,68 +525,119 @@ db $C4,$FF,$C0,$BB
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
  wait $2
  wait $7
- octave $3
  note $8E
  wait $3
  wait $5
  wait $7
- octave $3
  note $AE
  wait $3
  wait $5
  wait $7
- octave $3
  note $8E
- wait $4
- wait $7
- octave $3
+ wait $E
+ silence $E
+ wait $E
  note $8E
 ; pattern break
+ wait $A
+ wait $4
+ wait $7
  envelope $97
  duty_cycle $40
- wait $A
- wait $4
- wait $7
- octave $3
  note $6E
  wait $2
  wait $C
  wait $7
- octave $3
  note $6E
  wait $3
  wait $5
  wait $7
- octave $3
  note $8E
  wait $3
  wait $5
  wait $7
- octave $3
  note $9E
  wait $3
  wait $5
  wait $7
- octave $3
  note $4E
- wait $4
- wait $7
- octave $3
+ wait $E
+ silence $E
+ wait $E
  note $4E
  wait $2
  wait $C
  wait $7
- octave $3
  note $1E
 ; pattern break
- envelope $97
- duty_cycle $40
  wait $4
  wait $7
+ envelope $97
+ duty_cycle $40
+ octave $2
+ note $BE
+ wait $4
+ wait $7
+ octave $3
+ note $2E
+ wait $3
+ wait $6
+ silence $E
+ note $6E
+ wait $2
+ wait $7
+ note $8E
+ wait $3
+ wait $5
+ wait $7
+ note $9E
+ wait $3
+ wait $5
+ wait $7
+ note $4E
+ wait $E
+ silence $E
+ wait $E
+ note $4E
+; pattern break
+ wait $A
+ wait $4
+ wait $7
+ envelope $97
+ duty_cycle $80
+ note $6E
+ wait $2
+ wait $C
+ wait $7
+ note $6E
+ wait $3
+ wait $5
+ wait $7
+ note $8E
+ wait $3
+ wait $5
+ wait $7
+ note $9E
+ wait $3
+ wait $5
+ wait $7
+ note $4E
+ wait $E
+ silence $E
+ wait $E
+ note $4E
+ wait $2
+ wait $C
+ wait $7
+ duty_cycle $40
+ note $1E
+; pattern break
+ wait $4
+ wait $7
+ envelope $97
  octave $2
  note $BE
  wait $4
@@ -692,83 +647,10 @@ db $C4,$FF,$C0,$BB
  wait $3
  wait $5
  wait $7
- octave $3
- note $6E
- wait $2
- wait $7
- octave $3
- note $8E
- wait $3
- wait $5
- wait $7
- octave $3
- note $9E
- wait $3
- wait $5
- wait $7
- octave $3
- note $4E
- wait $4
- wait $7
- octave $3
- note $4E
-; pattern break
- envelope $97
- duty_cycle $80
- wait $A
- wait $4
- wait $7
- octave $3
  note $6E
  wait $2
  wait $C
  wait $7
- octave $3
- note $6E
- wait $3
- wait $5
- wait $7
- octave $3
- note $8E
- wait $3
- wait $5
- wait $7
- octave $3
- note $9E
- wait $3
- wait $5
- wait $7
- octave $3
- note $4E
- wait $4
- wait $7
- octave $3
- note $4E
- duty_cycle $40
- wait $2
- wait $C
- wait $7
- octave $3
- note $1E
-; pattern break
- envelope $97
- wait $4
- wait $7
- octave $2
- note $BE
- wait $4
- wait $7
- octave $3
- note $2E
- wait $3
- wait $5
- wait $7
- octave $3
- note $6E
- wait $2
- wait $C
- wait $7
- octave $3
  note $1E
  wait $4
  wait $7
@@ -781,361 +663,292 @@ db $C4,$FF,$C0,$BB
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
  wait $2
  wait $7
- octave $3
  note $8E
 ; pattern break
- envelope $97
  wait $3
  wait $5
  wait $7
- octave $3
+ envelope $97
  note $AE
  wait $3
  wait $5
  wait $7
- octave $3
  note $8E
+ wait $E
+ silence $E
+ wait $E
+ note $8E
+ wait $A
  wait $4
  wait $7
- octave $3
- note $8E
  envelope $94
  duty_cycle $40
- wait $A
- wait $4
- wait $7
- octave $3
  note $6E
  wait $2
  wait $7
- octave $3
  note $AE
  wait $4
  wait $7
- octave $3
  note $AE
  wait $3
  wait $5
  wait $7
- octave $3
  note $8E
 ; pattern break
- envelope $95
- duty_cycle $40
  wait $3
  wait $5
  wait $7
- octave $3
+ envelope $95
+ duty_cycle $40
  note $6E
  wait $3
  wait $5
  wait $7
- octave $3
  note $3E
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
  wait $4
  wait $7
- octave $3
  note $8E
  wait $3
  wait $5
  wait $7
- octave $3
  note $AE
  wait $3
  wait $5
  wait $7
- octave $3
  note $BE
  wait $4
  wait $7
- octave $3
  note $AE
  wait $4
  wait $7
- octave $3
  note $BE
  wait $4
  wait $7
- octave $3
  note $AE
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
 ; pattern break
+ wait $2
+ wait $7
  envelope $86
  duty_cycle $80
- wait $2
- wait $7
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $5E
  wait $4
  wait $7
- octave $3
  note $6E
  wait $4
  wait $7
- octave $3
  note $8E
  wait $4
  wait $7
- octave $3
  note $5E
  wait $3
  wait $5
  wait $7
- octave $3
  note $3E
  wait $3
  wait $5
  wait $7
- octave $3
+ note $1E
+ wait $E
+ silence $E
+ wait $E
  note $1E
  wait $4
  wait $7
- octave $3
- note $1E
- wait $4
- wait $7
- octave $3
  note $3E
- wait $4
- wait $7
- octave $3
+ wait $E
+ silence $E
+ wait $E
  note $3E
 ; pattern break
- envelope $95
- duty_cycle $40
  wait $2
  wait $C
  wait $7
- octave $3
+ envelope $95
+ duty_cycle $40
  note $6E
  wait $3
  wait $5
  wait $7
- octave $3
  note $3E
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
  wait $4
  wait $7
- octave $3
  note $8E
  wait $3
  wait $5
  wait $7
- octave $3
  note $AE
  wait $3
  wait $5
  wait $7
- octave $3
  note $BE
  wait $4
  wait $7
- octave $3
  note $AE
  wait $4
  wait $7
- octave $3
  note $BE
  wait $4
  wait $7
- octave $3
  note $AE
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
 ; pattern break
- envelope $86
- duty_cycle $80
  wait $2
  wait $7
- octave $3
+ envelope $86
+ duty_cycle $80
  note $3E
  wait $4
  wait $7
- octave $3
  note $5E
  wait $4
  wait $7
- octave $3
  note $6E
  wait $4
  wait $7
- octave $3
  note $BE
  wait $4
  wait $7
- octave $3
  note $AE
  wait $3
  wait $5
  wait $7
- octave $3
  note $8E
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
- wait $4
- wait $7
- octave $3
+ wait $E
+ silence $E
+ wait $E
  note $6E
 ; pattern break
- envelope $95
- duty_cycle $40
  wait $1
  wait $5
  wait $7
- octave $3
- note $6E
- wait $3
- wait $5
- wait $7
- octave $3
- note $3E
- wait $3
- wait $5
- wait $7
- octave $3
- note $6E
- wait $4
- wait $7
- octave $3
- note $8E
- wait $3
- wait $5
- wait $7
- octave $3
- note $AE
- wait $3
- wait $5
- wait $7
- octave $3
- note $BE
- wait $4
- wait $7
- octave $3
- note $AE
- wait $4
- wait $7
- octave $3
- note $BE
- wait $4
- wait $7
- octave $3
- note $AE
- wait $3
- wait $5
- wait $7
- octave $3
- note $6E
-; pattern break
- envelope $86
- duty_cycle $80
- wait $2
- wait $7
- octave $3
- note $3E
- wait $4
- wait $7
- octave $3
- note $5E
- wait $4
- wait $7
- octave $3
- note $6E
- wait $4
- wait $7
- octave $3
- note $8E
- wait $4
- wait $7
- octave $3
- note $5E
- wait $3
- wait $5
- wait $7
- octave $3
- note $3E
- wait $3
- wait $5
- wait $7
- octave $3
- note $1E
- wait $4
- wait $7
- octave $3
- note $1E
- wait $4
- wait $7
- octave $3
- note $3E
- wait $4
- wait $7
- octave $3
- note $3E
-; pattern break
  envelope $95
  duty_cycle $40
+ note $6E
+ wait $3
+ wait $5
+ wait $7
+ note $3E
+ wait $3
+ wait $5
+ wait $7
+ note $6E
+ wait $4
+ wait $7
+ note $8E
+ wait $3
+ wait $5
+ wait $7
+ note $AE
+ wait $3
+ wait $5
+ wait $7
+ note $BE
+ wait $4
+ wait $7
+ note $AE
+ wait $4
+ wait $7
+ note $BE
+ wait $4
+ wait $7
+ note $AE
+ wait $3
+ wait $5
+ wait $7
+ note $6E
+; pattern break
+ wait $2
+ wait $7
+ envelope $86
+ duty_cycle $80
+ note $3E
+ wait $4
+ wait $7
+ note $5E
+ wait $4
+ wait $7
+ note $6E
+ wait $4
+ wait $7
+ note $8E
+ wait $4
+ wait $7
+ note $5E
+ wait $3
+ wait $5
+ wait $7
+ note $3E
+ wait $3
+ wait $5
+ wait $7
+ note $1E
+ wait $E
+ silence $E
+ wait $E
+ note $1E
+ wait $4
+ wait $7
+ note $3E
+ wait $E
+ silence $E
+ wait $E
+ note $3E
+; pattern break
  wait $2
  wait $C
  wait $7
- octave $3
+ envelope $95
+ duty_cycle $40
  note $6E
  wait $3
  wait $5
  wait $7
- octave $3
  note $3E
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
  wait $4
  wait $7
- octave $3
  note $8E
  wait $3
  wait $5
  wait $7
- octave $3
  note $AE
  wait $3
  wait $5
  wait $7
- octave $3
  note $BE
  wait $4
  wait $7
- octave $3
  note $AE
  wait $4
  wait $7
- octave $3
  note $BE
  wait $4
  wait $7
@@ -1147,41 +960,34 @@ db $C4,$FF,$C0,$BB
  octave $3
  note $6E
 ; pattern break
- envelope $86
- duty_cycle $80
  wait $2
  wait $7
- octave $3
+ envelope $86
+ duty_cycle $80
  note $3E
  wait $4
  wait $7
- octave $3
  note $5E
  wait $4
  wait $7
- octave $3
  note $6E
  wait $4
  wait $7
- octave $3
  note $BE
  wait $4
  wait $7
- octave $3
  note $AE
  wait $3
  wait $5
  wait $7
- octave $3
  note $8E
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
- wait $4
- wait $7
- octave $3
+ wait $E
+ silence $E
+ wait $E
  note $6E
  wait $1
  wait $5
@@ -1195,25 +1001,19 @@ BGM_Title_Pulse2:
  note $3E
  wait $4
  wait $7
- octave $4
  note $6E
  wait $4
  wait $7
- octave $4
  note $BE
  wait $4
  wait $7
- octave $4
  note $3E
  wait $4
  wait $7
- octave $4
  note $5E
  wait $E
- octave $4
  note $5E
  wait $E
- octave $4
  note $8E
  wait $E
  octave $5
@@ -1223,13 +1023,10 @@ BGM_Title_Pulse2:
  octave $4
  note $8E
  wait $E
- octave $4
  note $5E
  wait $E
- octave $4
  note $3E
  wait $E
- octave $4
  note $3E
  wait $E
  octave $3
@@ -1256,49 +1053,37 @@ BGM_Title_Pulse2:
  octave $4
  note $8E
  wait $E
- octave $4
  note $6E
  wait $4
  wait $7
- octave $4
  note $5E
  wait $4
  wait $7
- octave $4
  note $6E
  wait $E
- octave $4
  note $8E
  wait $E
- octave $4
  note $AE
 ; pattern break
+ wait $E
  envelope $82
  duty_cycle $C0
- wait $E
- octave $4
  note $3E
  wait $4
  wait $7
- octave $4
  note $6E
  wait $4
  wait $7
- octave $4
  note $BE
  wait $4
  wait $7
- octave $4
  note $3E
  wait $4
  wait $7
- octave $4
  note $5E
  wait $E
- octave $4
  note $5E
  wait $E
- octave $4
  note $8E
  wait $E
  octave $5
@@ -1308,13 +1093,10 @@ BGM_Title_Pulse2:
  octave $4
  note $8E
  wait $E
- octave $4
  note $5E
  wait $E
- octave $4
  note $3E
  wait $E
- octave $4
  note $3E
  wait $E
  octave $3
@@ -1341,7 +1123,6 @@ BGM_Title_Pulse2:
  octave $4
  note $8E
  wait $E
- octave $4
  note $6E
  wait $4
  wait $7
@@ -1352,38 +1133,29 @@ BGM_Title_Pulse2:
  octave $4
  note $AE
  wait $E
- octave $4
  note $6E
  wait $E
- octave $4
  note $3E
 ; pattern break
+ wait $E
  envelope $82
  duty_cycle $40
- wait $E
- octave $4
  note $3E
  wait $4
  wait $7
- octave $4
  note $6E
  wait $4
  wait $7
- octave $4
  note $BE
  wait $4
  wait $7
- octave $4
  note $3E
  wait $4
  wait $7
- octave $4
  note $5E
  wait $E
- octave $4
  note $5E
  wait $E
- octave $4
  note $8E
  wait $E
  octave $5
@@ -1393,13 +1165,10 @@ BGM_Title_Pulse2:
  octave $4
  note $8E
  wait $E
- octave $4
  note $5E
  wait $E
- octave $4
  note $3E
  wait $E
- octave $4
  note $3E
  wait $E
  octave $3
@@ -1426,49 +1195,37 @@ BGM_Title_Pulse2:
  octave $4
  note $8E
  wait $E
- octave $4
  note $6E
  wait $4
  wait $7
- octave $4
  note $5E
  wait $4
  wait $7
- octave $4
  note $6E
  wait $E
- octave $4
  note $8E
  wait $E
- octave $4
  note $AE
 ; pattern break
+ wait $E
  envelope $82
  duty_cycle $40
- wait $E
- octave $4
  note $3E
  wait $4
  wait $7
- octave $4
  note $6E
  wait $4
  wait $7
- octave $4
  note $BE
  wait $4
  wait $7
- octave $4
  note $3E
  wait $4
  wait $7
- octave $4
  note $5E
  wait $E
- octave $4
  note $5E
  wait $E
- octave $4
  note $8E
  wait $E
  octave $5
@@ -1478,19 +1235,14 @@ BGM_Title_Pulse2:
  octave $4
  note $8E
  wait $E
- octave $4
  note $5E
  wait $E
- octave $4
  note $3E
  wait $E
- octave $4
  note $1E
  wait $E
- octave $4
  note $6E
  wait $E
- octave $4
  note $BE
  wait $E
  octave $5
@@ -1499,69 +1251,56 @@ BGM_Title_Pulse2:
  octave $4
  note $BE
  wait $E
- octave $4
  note $1E
  wait $E
  octave $5
  note $1E
  wait $E
- octave $5
  note $5E
  wait $E
- octave $5
  note $6E
  wait $E
- octave $5
  note $1E
  wait $E
  octave $4
  note $BE
  wait $E
- octave $4
  note $AE
  wait $E
- octave $4
  note $8E
  wait $E
- octave $4
  note $6E
  wait $E
- octave $4
  note $1E
  wait $E
  octave $3
  note $6E
 ; pattern break
+ wait $E
+ silence $E
+ wait $2
+ wait $7
  envelope $57
  duty_cycle $40
- wait $2
- wait $D
- wait $7
- octave $3
  note $1E
  wait $3
  wait $5
  wait $7
- octave $3
  note $1E
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
  wait $3
  wait $5
  wait $7
- octave $3
  note $5E
  wait $3
  wait $5
  wait $7
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $1E
  wait $3
  wait $5
@@ -1569,17 +1308,15 @@ BGM_Title_Pulse2:
  octave $2
  note $BE
 ; pattern break
- envelope $57
- duty_cycle $40
  wait $A
  wait $4
  wait $7
- octave $2
+ envelope $57
+ duty_cycle $40
  note $AE
  wait $3
  wait $5
  wait $7
- octave $2
  note $AE
  wait $3
  wait $5
@@ -1589,126 +1326,108 @@ BGM_Title_Pulse2:
  wait $3
  wait $5
  wait $7
- octave $3
  note $1E
  wait $3
  wait $5
  wait $7
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $1E
 ; pattern break
+ wait $2
+ wait $C
+ wait $7
  envelope $57
  duty_cycle $40
- wait $2
- wait $C
- wait $7
- octave $3
  note $1E
  wait $4
  wait $7
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $5E
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
  wait $2
  wait $C
  wait $7
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $1E
  wait $4
  wait $7
- octave $3
  note $5E
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
 ; pattern break
+ wait $2
+ wait $C
+ wait $7
  envelope $57
  duty_cycle $40
+ note $1E
+ wait $4
+ wait $7
+ octave $2
+ note $BE
+ wait $4
+ wait $7
+ octave $3
+ note $3E
+ wait $3
+ wait $5
+ wait $7
+ note $6E
+ wait $2
+ wait $7
+ octave $2
+ note $BE
+ wait $3
+ wait $5
+ wait $7
+ octave $3
+ note $3E
+ wait $3
+ wait $5
+ wait $7
+ note $1E
+ wait $4
+ wait $7
+ note $1E
+; pattern break
  wait $2
  wait $C
  wait $7
- octave $3
- note $1E
- wait $4
- wait $7
- octave $2
- note $BE
- wait $4
- wait $7
- octave $3
- note $3E
- wait $3
- wait $5
- wait $7
- octave $3
- note $6E
+ silence $E
  wait $2
  wait $7
- octave $2
- note $BE
- wait $3
- wait $5
- wait $7
- octave $3
- note $3E
- wait $3
- wait $5
- wait $7
- octave $3
- note $1E
- wait $4
- wait $7
- octave $3
- note $1E
-; pattern break
  envelope $57
  duty_cycle $80
- wait $1
- wait $3
- wait $7
- octave $3
  note $1E
  wait $3
  wait $5
  wait $7
- octave $3
  note $1E
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
  wait $3
  wait $5
  wait $7
- octave $3
  note $5E
  wait $3
  wait $5
  wait $7
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $1E
  wait $3
  wait $5
@@ -1716,17 +1435,15 @@ BGM_Title_Pulse2:
  octave $2
  note $BE
 ; pattern break
- envelope $57
- duty_cycle $80
  wait $A
  wait $4
  wait $7
- octave $2
+ envelope $57
+ duty_cycle $80
  note $AE
  wait $3
  wait $5
  wait $7
- octave $2
  note $AE
  wait $3
  wait $5
@@ -1736,63 +1453,51 @@ BGM_Title_Pulse2:
  wait $3
  wait $5
  wait $7
- octave $3
  note $1E
  wait $3
  wait $5
  wait $7
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $1E
 ; pattern break
- envelope $57
- duty_cycle $80
  wait $2
  wait $C
  wait $7
- octave $3
+ envelope $57
+ duty_cycle $80
  note $1E
  wait $4
  wait $7
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $5E
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
  wait $2
  wait $C
  wait $7
- octave $3
  note $3E
  wait $4
  wait $7
- octave $3
  note $1E
  wait $4
  wait $7
- octave $3
  note $5E
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
 ; pattern break
- envelope $57
- duty_cycle $80
  wait $2
  wait $C
  wait $7
- octave $3
+ envelope $57
+ duty_cycle $80
  note $1E
  wait $4
  wait $7
@@ -1805,177 +1510,63 @@ BGM_Title_Pulse2:
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
  wait $2
  wait $7
- octave $3
  note $8E
  wait $3
  wait $5
  wait $7
- octave $3
  note $AE
  wait $3
  wait $5
  wait $7
- octave $3
  note $8E
  wait $4
  wait $7
- octave $3
  note $8E
 ; pattern break
- envelope $63
- duty_cycle $40
  wait $2
  wait $C
  wait $7
- octave $2
- note $BE
- wait $E
- octave $3
- note $2E
- wait $E
- octave $3
- note $6E
- wait $E
- octave $3
- note $9E
- wait $E
- octave $4
- note $2E
- wait $E
- octave $4
- note $6E
- wait $E
- octave $4
- note $9E
- wait $E
- octave $5
- note $2E
- wait $E
- octave $5
- note $6E
- wait $E
- octave $5
- note $2E
- wait $E
- octave $4
- note $9E
- wait $E
- octave $4
- note $6E
- wait $E
- octave $4
- note $2E
- wait $E
- octave $3
- note $9E
- wait $E
- octave $3
- note $6E
- wait $E
- octave $3
- note $2E
- wait $E
- octave $2
- note $9E
- wait $E
- octave $3
- note $1E
- wait $E
- octave $3
- note $4E
- wait $E
- octave $3
- note $8E
- wait $E
- octave $4
- note $1E
- wait $E
- octave $4
- note $4E
- wait $E
- octave $4
- note $8E
- wait $E
- octave $4
- note $BE
- wait $E
- octave $5
- note $4E
- wait $E
- octave $4
- note $BE
- wait $E
- octave $4
- note $8E
- wait $E
- octave $4
- note $4E
- wait $E
- octave $4
- note $1E
- wait $E
- octave $3
- note $8E
- wait $E
- octave $3
- note $4E
- wait $E
- octave $3
- note $1E
-; pattern break
  envelope $63
  duty_cycle $40
- wait $E
  octave $2
  note $BE
  wait $E
  octave $3
  note $2E
  wait $E
- octave $3
  note $6E
  wait $E
- octave $3
  note $9E
  wait $E
  octave $4
  note $2E
  wait $E
- octave $4
  note $6E
  wait $E
- octave $4
  note $9E
  wait $E
  octave $5
  note $2E
  wait $E
- octave $5
  note $6E
  wait $E
- octave $5
  note $2E
  wait $E
  octave $4
  note $9E
  wait $E
- octave $4
  note $6E
  wait $E
- octave $4
  note $2E
  wait $E
  octave $3
  note $9E
  wait $E
- octave $3
  note $6E
  wait $E
- octave $3
  note $2E
  wait $E
  octave $2
@@ -1984,22 +1575,17 @@ BGM_Title_Pulse2:
  octave $3
  note $1E
  wait $E
- octave $3
  note $4E
  wait $E
- octave $3
  note $8E
  wait $E
  octave $4
  note $1E
  wait $E
- octave $4
  note $4E
  wait $E
- octave $4
  note $8E
  wait $E
- octave $4
  note $BE
  wait $E
  octave $5
@@ -2008,73 +1594,58 @@ BGM_Title_Pulse2:
  octave $4
  note $BE
  wait $E
- octave $4
  note $8E
  wait $E
- octave $4
  note $4E
  wait $E
- octave $4
  note $1E
  wait $E
  octave $3
  note $8E
  wait $E
- octave $3
  note $4E
  wait $E
- octave $3
  note $1E
 ; pattern break
+ wait $E
  envelope $63
  duty_cycle $40
- wait $E
  octave $2
  note $BE
  wait $E
  octave $3
  note $2E
  wait $E
- octave $3
  note $6E
  wait $E
- octave $3
  note $9E
  wait $E
  octave $4
  note $2E
  wait $E
- octave $4
  note $6E
  wait $E
- octave $4
  note $9E
  wait $E
  octave $5
  note $2E
  wait $E
- octave $5
  note $6E
  wait $E
- octave $5
  note $2E
  wait $E
  octave $4
  note $9E
  wait $E
- octave $4
  note $6E
  wait $E
- octave $4
  note $2E
  wait $E
  octave $3
  note $9E
  wait $E
- octave $3
  note $6E
  wait $E
- octave $3
  note $2E
  wait $E
  octave $2
@@ -2083,22 +1654,17 @@ BGM_Title_Pulse2:
  octave $3
  note $1E
  wait $E
- octave $3
  note $4E
  wait $E
- octave $3
  note $8E
  wait $E
  octave $4
  note $1E
  wait $E
- octave $4
  note $4E
  wait $E
- octave $4
  note $8E
  wait $E
- octave $4
  note $BE
  wait $E
  octave $5
@@ -2107,472 +1673,382 @@ BGM_Title_Pulse2:
  octave $4
  note $BE
  wait $E
- octave $4
  note $8E
  wait $E
- octave $4
  note $4E
  wait $E
- octave $4
  note $1E
  wait $E
  octave $3
  note $8E
  wait $E
- octave $3
  note $4E
  wait $E
- octave $3
  note $1E
 ; pattern break
+ wait $E
  envelope $63
  duty_cycle $40
- wait $E
  octave $2
  note $BE
  wait $E
  octave $3
  note $2E
  wait $E
- octave $3
  note $6E
  wait $E
- octave $3
  note $9E
  wait $E
  octave $4
  note $2E
  wait $E
- octave $4
  note $6E
  wait $E
- octave $4
  note $9E
  wait $E
  octave $5
  note $2E
  wait $E
- octave $5
  note $6E
  wait $E
- octave $5
  note $2E
  wait $E
  octave $4
  note $9E
  wait $E
- octave $4
  note $6E
  wait $E
- octave $4
  note $2E
  wait $E
  octave $3
  note $9E
  wait $E
- octave $3
  note $6E
  wait $E
- octave $3
  note $2E
+ wait $E
+ octave $2
+ note $9E
+ wait $E
+ octave $3
+ note $1E
+ wait $E
+ note $4E
+ wait $E
+ note $8E
+ wait $E
+ octave $4
+ note $1E
+ wait $E
+ note $4E
+ wait $E
+ note $8E
+ wait $E
+ note $BE
+ wait $E
+ octave $5
+ note $4E
+ wait $E
+ octave $4
+ note $BE
+ wait $E
+ note $8E
+ wait $E
+ note $4E
+ wait $E
+ note $1E
  wait $E
  octave $3
  note $8E
  wait $E
+ note $4E
+ wait $E
+ note $1E
+; pattern break
+ wait $E
+ envelope $63
+ duty_cycle $40
+ octave $2
+ note $BE
+ wait $E
  octave $3
+ note $2E
+ wait $E
+ note $6E
+ wait $E
+ note $9E
+ wait $E
+ octave $4
+ note $2E
+ wait $E
+ note $6E
+ wait $E
+ note $9E
+ wait $E
+ octave $5
+ note $2E
+ wait $E
+ note $6E
+ wait $E
+ note $2E
+ wait $E
+ octave $4
+ note $9E
+ wait $E
+ note $6E
+ wait $E
+ note $2E
+ wait $E
+ octave $3
+ note $9E
+ wait $E
+ note $6E
+ wait $E
+ note $2E
+ wait $E
+ note $8E
+ wait $E
  note $BE
  wait $E
  octave $4
  note $2E
  wait $E
- octave $4
  note $6E
  wait $E
- octave $4
  note $8E
  wait $E
- octave $4
  note $BE
  wait $E
  octave $5
  note $2E
  wait $E
- octave $5
  note $6E
  wait $E
- octave $5
  note $8E
  wait $E
- octave $5
  note $6E
  wait $E
- octave $5
  note $2E
  wait $E
  octave $4
  note $BE
  wait $E
- octave $4
  note $8E
  wait $E
- octave $4
  note $6E
  wait $E
- octave $4
  note $2E
  wait $E
  octave $3
  note $BE
 ; pattern break
+ wait $E
  envelope $63
- wait $E
- octave $3
  note $8E
  wait $E
- octave $3
  note $BE
  wait $E
  octave $4
  note $2E
  wait $E
- octave $4
  note $6E
  wait $E
- octave $4
  note $8E
  wait $E
- octave $4
  note $BE
  wait $E
  octave $5
  note $2E
  wait $E
- octave $5
  note $6E
  wait $E
- octave $5
  note $8E
  wait $E
- octave $5
  note $6E
  wait $E
- octave $5
  note $2E
  wait $E
  octave $4
  note $BE
  wait $E
- octave $4
  note $8E
  wait $E
- octave $4
  note $6E
  wait $E
- octave $4
  note $2E
  wait $E
  octave $3
  note $BE
+ wait $E
  envelope $54
  duty_cycle $80
+ octave $4
+ note $6E
+ wait $2
+ wait $7
+ note $AE
+ wait $4
+ wait $7
+ note $AE
+ wait $3
+ wait $5
+ wait $7
+ note $8E
+; pattern break
+ wait $3
+ wait $5
+ wait $7
+ envelope $95
+ duty_cycle $40
+ octave $3
+ note $1E
+ wait $3
+ wait $5
+ wait $7
+ octave $2
+ note $BE
+ wait $3
+ wait $5
+ wait $7
+ octave $3
+ note $1E
+ wait $4
+ wait $7
+ note $3E
+ wait $3
+ wait $5
+ wait $7
+ note $6E
+ wait $3
+ wait $5
+ wait $7
+ note $8E
+ wait $4
+ wait $7
+ note $6E
+ wait $4
+ wait $7
+ note $8E
+ wait $4
+ wait $7
+ note $6E
+ wait $3
+ wait $5
+ wait $7
+ note $3E
+; pattern break
+ wait $2
+ wait $C
+ wait $7
+ envelope $56
+ duty_cycle $80
+ note $3E
+ wait $4
+ wait $7
+ note $5E
+ wait $4
+ wait $7
+ note $6E
+ wait $4
+ wait $7
+ note $8E
+ wait $4
+ wait $7
+ note $5E
+ wait $3
+ wait $5
+ wait $7
+ note $3E
+ wait $3
+ wait $5
+ wait $7
+ note $1E
+ wait $4
+ wait $7
+ note $1E
+ wait $4
+ wait $7
+ note $3E
+ wait $4
+ wait $7
+ note $3E
+; pattern break
+ wait $2
+ wait $7
+ envelope $95
+ duty_cycle $40
+ note $1E
+ wait $3
+ wait $5
+ wait $7
+ octave $2
+ note $BE
+ wait $3
+ wait $5
+ wait $7
+ octave $3
+ note $1E
+ wait $4
+ wait $7
+ note $3E
+ wait $3
+ wait $5
+ wait $7
+ note $6E
+ wait $3
+ wait $5
+ wait $7
+ note $8E
+ wait $4
+ wait $7
+ note $6E
+ wait $4
+ wait $7
+ note $8E
+ wait $4
+ wait $7
+ note $6E
+ wait $3
+ wait $5
+ wait $7
+ note $3E
+; pattern break
+ wait $2
+ wait $C
+ wait $7
+ envelope $56
+ duty_cycle $80
+ note $3E
+ wait $4
+ wait $7
+ note $5E
+ wait $4
+ wait $7
+ note $6E
+ wait $4
+ wait $7
+ note $BE
+ wait $4
+ wait $7
+ note $AE
+ wait $3
+ wait $5
+ wait $7
+ note $8E
+ wait $3
+ wait $5
+ wait $7
+ note $6E
  wait $E
- octave $4
- note $6E
- wait $2
- wait $7
- octave $4
- note $AE
- wait $4
- wait $7
- octave $4
- note $AE
- wait $3
- wait $5
- wait $7
- octave $4
- note $8E
-; pattern break
- envelope $95
- duty_cycle $40
- wait $3
- wait $5
- wait $7
- octave $3
- note $1E
- wait $3
- wait $5
- wait $7
- octave $2
- note $BE
- wait $3
- wait $5
- wait $7
- octave $3
- note $1E
- wait $4
- wait $7
- octave $3
- note $3E
- wait $3
- wait $5
- wait $7
- octave $3
- note $6E
- wait $3
- wait $5
- wait $7
- octave $3
- note $8E
- wait $4
- wait $7
- octave $3
- note $6E
- wait $4
- wait $7
- octave $3
- note $8E
- wait $4
- wait $7
- octave $3
- note $6E
- wait $3
- wait $5
- wait $7
- octave $3
- note $3E
-; pattern break
- envelope $56
- duty_cycle $80
- wait $2
- wait $C
- wait $7
- octave $3
- note $3E
- wait $4
- wait $7
- octave $3
- note $5E
- wait $4
- wait $7
- octave $3
- note $6E
- wait $4
- wait $7
- octave $3
- note $8E
- wait $4
- wait $7
- octave $3
- note $5E
- wait $3
- wait $5
- wait $7
- octave $3
- note $3E
- wait $3
- wait $5
- wait $7
- octave $3
- note $1E
- wait $4
- wait $7
- octave $3
- note $1E
- wait $4
- wait $7
- octave $3
- note $3E
- wait $4
- wait $7
- octave $3
- note $3E
-; pattern break
- envelope $95
- duty_cycle $40
- wait $2
- wait $7
- octave $3
- note $1E
- wait $3
- wait $5
- wait $7
- octave $2
- note $BE
- wait $3
- wait $5
- wait $7
- octave $3
- note $1E
- wait $4
- wait $7
- octave $3
- note $3E
- wait $3
- wait $5
- wait $7
- octave $3
- note $6E
- wait $3
- wait $5
- wait $7
- octave $3
- note $8E
- wait $4
- wait $7
- octave $3
- note $6E
- wait $4
- wait $7
- octave $3
- note $8E
- wait $4
- wait $7
- octave $3
- note $6E
- wait $3
- wait $5
- wait $7
- octave $3
- note $3E
-; pattern break
- envelope $56
- duty_cycle $80
- wait $2
- wait $C
- wait $7
- octave $3
- note $3E
- wait $4
- wait $7
- octave $3
- note $5E
- wait $4
- wait $7
- octave $3
- note $6E
- wait $4
- wait $7
- octave $3
- note $BE
- wait $4
- wait $7
- octave $3
- note $AE
- wait $3
- wait $5
- wait $7
- octave $3
- note $8E
- wait $3
- wait $5
- wait $7
- octave $3
- note $6E
- wait $4
- wait $7
- octave $3
+ silence $E
+ wait $E
  note $6E
 ; pattern break
- envelope $95
- duty_cycle $40
  wait $A
  wait $4
  wait $7
- octave $3
- note $1E
- wait $3
- wait $5
- wait $7
- octave $2
- note $BE
- wait $3
- wait $5
- wait $7
- octave $3
- note $1E
- wait $4
- wait $7
- octave $3
- note $3E
- wait $3
- wait $5
- wait $7
- octave $3
- note $6E
- wait $3
- wait $5
- wait $7
- octave $3
- note $8E
- wait $4
- wait $7
- octave $3
- note $6E
- wait $4
- wait $7
- octave $3
- note $8E
- wait $4
- wait $7
- octave $3
- note $6E
- wait $3
- wait $5
- wait $7
- octave $3
- note $3E
-; pattern break
- envelope $56
- duty_cycle $80
- wait $2
- wait $C
- wait $7
- octave $3
- note $3E
- wait $4
- wait $7
- octave $3
- note $5E
- wait $4
- wait $7
- octave $3
- note $6E
- wait $4
- wait $7
- octave $3
- note $8E
- wait $4
- wait $7
- octave $3
- note $5E
- wait $3
- wait $5
- wait $7
- octave $3
- note $3E
- wait $3
- wait $5
- wait $7
- octave $3
- note $1E
- wait $4
- wait $7
- octave $3
- note $1E
- wait $4
- wait $7
- octave $3
- note $3E
- wait $4
- wait $7
- octave $3
- note $3E
-; pattern break
  envelope $95
  duty_cycle $40
- wait $2
- wait $7
- octave $3
  note $1E
  wait $3
  wait $5
@@ -2586,72 +2062,134 @@ BGM_Title_Pulse2:
  note $1E
  wait $4
  wait $7
- octave $3
  note $3E
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
  wait $3
  wait $5
  wait $7
- octave $3
  note $8E
  wait $4
  wait $7
- octave $3
  note $6E
  wait $4
  wait $7
- octave $3
  note $8E
  wait $4
  wait $7
- octave $3
- note $AE
+ note $6E
  wait $3
  wait $5
  wait $7
- octave $3
  note $3E
 ; pattern break
- envelope $56
- duty_cycle $80
  wait $2
  wait $C
  wait $7
- octave $3
+ envelope $56
+ duty_cycle $80
  note $3E
  wait $4
  wait $7
- octave $3
  note $5E
  wait $4
  wait $7
- octave $3
  note $6E
  wait $4
  wait $7
- octave $3
- note $BE
+ note $8E
  wait $4
  wait $7
+ note $5E
+ wait $3
+ wait $5
+ wait $7
+ note $3E
+ wait $3
+ wait $5
+ wait $7
+ note $1E
+ wait $4
+ wait $7
+ note $1E
+ wait $4
+ wait $7
+ note $3E
+ wait $4
+ wait $7
+ note $3E
+; pattern break
+ wait $2
+ wait $7
+ envelope $95
+ duty_cycle $40
+ note $1E
+ wait $3
+ wait $5
+ wait $7
+ octave $2
+ note $BE
+ wait $3
+ wait $5
+ wait $7
  octave $3
+ note $1E
+ wait $4
+ wait $7
+ note $3E
+ wait $3
+ wait $5
+ wait $7
+ note $6E
+ wait $3
+ wait $5
+ wait $7
+ note $8E
+ wait $4
+ wait $7
+ note $6E
+ wait $4
+ wait $7
+ note $8E
+ wait $4
+ wait $7
  note $AE
  wait $3
  wait $5
  wait $7
- octave $3
+ note $3E
+; pattern break
+ wait $2
+ wait $C
+ wait $7
+ envelope $56
+ duty_cycle $80
+ note $3E
+ wait $4
+ wait $7
+ note $5E
+ wait $4
+ wait $7
+ note $6E
+ wait $4
+ wait $7
+ note $BE
+ wait $4
+ wait $7
+ note $AE
+ wait $3
+ wait $5
+ wait $7
  note $8E
  wait $3
  wait $5
  wait $7
- octave $3
  note $6E
- wait $4
- wait $7
- octave $3
+ wait $E
+ silence $E
+ wait $E
  note $6E
  wait $A
  wait $4
@@ -2677,7 +2215,6 @@ db $C1,$D5
  note $BE
  wait $4
  wait $7
- octave $2
  note $1E
  wait $4
  wait $7
@@ -2709,7 +2246,6 @@ db $C1,$D5
  note $AE
  wait $4
  wait $7
- octave $2
  note $3E
  wait $4
  wait $7
@@ -2724,9 +2260,9 @@ db $C1,$D5
  octave $3
  note $3E
 ; pattern break
+ wait $4
+ wait $7
  wave_vol $40
- wait $4
- wait $7
  octave $1
  note $BE
  wait $4
@@ -2743,7 +2279,6 @@ db $C1,$D5
  note $BE
  wait $4
  wait $7
- octave $2
  note $1E
  wait $4
  wait $7
@@ -2775,7 +2310,6 @@ db $C1,$D5
  note $AE
  wait $4
  wait $7
- octave $2
  note $3E
  wait $4
  wait $7
@@ -2790,9 +2324,9 @@ db $C1,$D5
  octave $3
  note $3E
 ; pattern break
+ wait $4
+ wait $7
  wave_vol $40
- wait $4
- wait $7
  octave $1
  note $BE
  wait $4
@@ -2809,7 +2343,6 @@ db $C1,$D5
  note $BE
  wait $4
  wait $7
- octave $2
  note $1E
  wait $4
  wait $7
@@ -2841,7 +2374,6 @@ db $C1,$D5
  note $AE
  wait $4
  wait $7
- octave $2
  note $3E
  wait $4
  wait $7
@@ -2856,9 +2388,9 @@ db $C1,$D5
  octave $3
  note $3E
 ; pattern break
+ wait $4
+ wait $7
  wave_vol $40
- wait $4
- wait $7
  octave $1
  note $BE
  wait $4
@@ -2875,7 +2407,6 @@ db $C1,$D5
  note $BE
  wait $4
  wait $7
- octave $2
  note $1E
  wait $4
  wait $7
@@ -3184,7 +2715,6 @@ db $C1,$D5
 ; pattern break
  wait $4
  wait $7
- octave $2
  note $6E
  wait $4
  wait $7
@@ -3427,7 +2957,6 @@ db $C1,$D5
  note $8E
  wait $4
  wait $7
- octave $2
  note $1E
  wait $4
  wait $7
@@ -3574,7 +3103,6 @@ db $C1,$D5
 ; pattern break
  wait $4
  wait $7
- octave $2
  note $2E
  wait $4
  wait $7
@@ -3704,7 +3232,6 @@ db $C1,$D5
 ; pattern break
  wait $4
  wait $7
- octave $2
  note $1E
  wait $4
  wait $7
@@ -3740,16 +3267,13 @@ db $C1,$D5
  note $6E
  wait $2
  wait $7
- octave $2
  note $AE
  wait $4
  wait $7
- octave $2
  note $AE
  wait $3
  wait $5
  wait $7
- octave $2
  note $8E
 ; pattern break
  wait $3
@@ -3771,7 +3295,6 @@ db $C1,$D5
  note $BE
  wait $4
  wait $7
- octave $2
  note $1E
  wait $4
  wait $7
@@ -3803,7 +3326,6 @@ db $C1,$D5
  note $AE
  wait $4
  wait $7
- octave $2
  note $3E
  wait $4
  wait $7
@@ -3836,7 +3358,6 @@ db $C1,$D5
  note $BE
  wait $4
  wait $7
- octave $2
  note $1E
  wait $4
  wait $7
@@ -3868,7 +3389,6 @@ db $C1,$D5
  note $AE
  wait $4
  wait $7
- octave $2
  note $3E
  wait $4
  wait $7
@@ -3901,7 +3421,6 @@ db $C1,$D5
  note $BE
  wait $4
  wait $7
- octave $2
  note $1E
  wait $4
  wait $7
@@ -3933,7 +3452,6 @@ db $C1,$D5
  note $AE
  wait $4
  wait $7
- octave $2
  note $3E
  wait $4
  wait $7
@@ -3966,7 +3484,6 @@ db $C1,$D5
  note $BE
  wait $4
  wait $7
- octave $2
  note $1E
  wait $4
  wait $7
@@ -4031,7 +3548,6 @@ db $C1,$D5
  note $BE
  wait $4
  wait $7
- octave $2
  note $1E
  wait $4
  wait $7
@@ -4063,7 +3579,6 @@ db $C1,$D5
  note $AE
  wait $4
  wait $7
- octave $2
  note $3E
  wait $4
  wait $7
@@ -4096,7 +3611,6 @@ db $C1,$D5
  note $BE
  wait $4
  wait $7
- octave $2
  note $1E
  wait $4
  wait $7
@@ -4128,7 +3642,6 @@ db $C1,$D5
  note $AE
  wait $4
  wait $7
- octave $2
  note $3E
  wait $4
  wait $7
@@ -4161,7 +3674,6 @@ db $C1,$D5
  note $BE
  wait $4
  wait $7
- octave $2
  note $1E
  wait $4
  wait $7
@@ -4193,7 +3705,6 @@ db $C1,$D5
  note $AE
  wait $4
  wait $7
- octave $2
  note $3E
  wait $4
  wait $7
@@ -4226,7 +3737,6 @@ db $C1,$D5
  note $BE
  wait $4
  wait $7
- octave $2
  note $1E
  wait $4
  wait $7

@@ -190,6 +190,15 @@ var
   Pat: PPattern;
   Patterns: TPatternMap;
 
+  function IsEmptyRow(Row: TTBMTrackRow): Boolean;
+  begin
+    Result :=
+      (Row.Note = 0)
+      and (Row.Effects[0].EffectType = 0) and (Row.Effects[0].Param = 0)
+      and (Row.Effects[1].EffectType = 0) and (Row.Effects[1].Param = 0)
+      and (Row.Effects[2].EffectType = 0) and (Row.Effects[2].Param = 0);
+  end;
+
   procedure Wait(Rows: Integer);
   var
     Frames: Integer;
@@ -212,12 +221,18 @@ var
     Octave, Note: Integer;
     FX: TTBMEffect;
     Waited: Integer = 0;
+    OldOctave: Integer = -1;
   begin
     for I := Low(OrderMatrix[Ch]) to High(OrderMatrix[Ch])-1 do begin
       writeln(F, '; pattern break');
       Pat := FetchPattern(Patterns, OrderMatrix[Ch, I]);
 
       for Row in Pat^ do begin
+        if (not IsEmptyRow(Row)) and (Waited > 0) then begin
+          Wait(Waited);
+          Waited := 0;
+        end;
+
         for FX in Row.Effects do begin
           case TTBMEffectType(FX.EffectType) of
             etSetEnvelope: Writeln(F, ' envelope $', IntToHex(FX.Param, 2));
@@ -239,21 +254,23 @@ var
             end;
           end;
         end;
-        if Row.Note = 0 then
-          Inc(Waited)
-          //Writeln(F, ' wait $E')
-        else if Row.Note = 85 then
+
+        if IsEmptyRow(Row) then
           Inc(Waited)
         else begin
-          if Waited > 0 then begin
-            Wait(Waited);
-            Waited := 0;
-          end;
-          Note := (Row.Note - 1) mod 12;
-          Octave := EnsureRange(((Row.Note - 1) div 12)+1, 1, 7);
+          if (Row.Note = 85) then begin
+            Writeln(F, ' silence $E');
+          end else begin
+            Note := (Row.Note - 1) mod 12;
+            Octave := EnsureRange(((Row.Note - 1) div 12)+1, 1, 7);
 
-          Writeln(F, ' octave $'+IntToHex(Octave, 1));
-          Writeln(F, ' note $'+IntToHex(Note, 1)+'E');
+            if (Octave <> OldOctave) then
+              Writeln(F, ' octave $'+IntToHex(Octave, 1));
+
+            Writeln(F, ' note $'+IntToHex(Note, 1)+'E');
+
+            OldOctave := Octave;
+          end;
         end;
       end;
     end;
