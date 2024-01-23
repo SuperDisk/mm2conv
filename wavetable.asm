@@ -1,6 +1,6 @@
 BGM_WavetablePointer_Table:
     dw Wavetable1 ; Silence
-    dw Wavetable2 ; Title
+    dw Wavetable1 ; Title
     dw Wavetable1 ; Stage Select
     dw Wavetable1 ; Stage Start
     dw Wavetable1 ; Password
@@ -35,7 +35,8 @@ BGM_WavetablePointer_Table:
 ; ================ Wavetables ================
 
 Wavetable1:
-    db $00,$55,$AA,$FF,$00,$55,$AA,$FF,$00,$55,$AA,$FF,$00,$55,$AA,$FF
+ db $00, $55, $AA, $FF, $AA, $55, $00, $55, $AA, $FF, $AA, $55, $00, $55, $AA, $FF
+    ; db $00,$55,$AA,$FF,$00,$55,$AA,$FF,$00,$55,$AA,$FF,$00,$55,$AA,$FF
 ; Hex     : 0055AAFF0055AAFF0055AAFF0055AAFF
 ; Decimal : 0 0 5 5 10 10 15 15 0 0 5 5 10 10 15 15 0 0 5 5 10 10 15 15 0 0 5 5 10 10 15 15
 
