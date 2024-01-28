@@ -79,7 +79,7 @@ type
     LoopIndex: Byte;
   end;
 
-  TPattern = array[0..63] of TTBMTrackRow;
+  TPattern = array of TTBMTrackRow;
   PPattern = ^TPattern;
 
   TOrderMatrix = array[0..3] of array of Integer;
@@ -96,6 +96,7 @@ type
   end;
 
   TByteArray = array of Byte;
+  TIntArray = array of Integer;
 
   //https://github.com/stoneface86/libtrackerboy/blob/bf4993d53bc34691ca75819a96d3d00b3b699dea/src/trackerboy/data.nim#L111
   TTBMEffectType = (
@@ -225,6 +226,17 @@ begin
   Result := High(S);
 end;
 
+procedure SetAdd2(var S: TIntArray; El: Integer);
+var
+  I: Integer;
+begin
+  for I := Low(S) to High(S) do
+    if S[I] = El then Exit;
+
+  SetLength(S, Length(S)+1);
+  S[High(S)] := El;
+end;
+
 { TConvApp }
 
 procedure TConvApp.DoRun;
@@ -251,7 +263,6 @@ var
 
   F: Text;
   SongLabel: String;
-  ErrorMsg: String;
 
   procedure Wait(Rows: Integer);
   var
@@ -270,7 +281,7 @@ var
     end;
   end;
 
-  procedure Emit(Ch: Integer);
+  procedure Emit(Ch: Integer; Lbl: String);
   var
     Octave: Integer;
     Note: Integer = 0;
@@ -279,16 +290,28 @@ var
     OldOctave: Integer = -1;
     NoiseVal: Byte;
     DidEnvelope: Boolean;
-    DoBreak: Boolean;
+    DoBreak, DoHalt: Boolean;
+    DoGoto: Integer;
     I: Integer;
+
+    UsedPatterns: array of integer;
   begin
     for I := Low(OrderMatrix[Ch]) to High(OrderMatrix[Ch])-1 do begin
-      WriteLn(F, '; pattern break');
-      Pat := FetchPattern(Patterns, OrderMatrix[Ch, I]);
+      WriteLn(F, '.P', I, ': ', 'call ', SongLabel, '_P', OrderMatrix[Ch, I]);
+      SetAdd2(UsedPatterns, OrderMatrix[Ch, I]);
+    end;
+
+    for I in UsedPatterns do begin
+      WriteLn(F, SongLabel, '_P',I,':');
+      Pat := FetchPattern(Patterns, I);
 
       DoBreak := False;
+      DoGoto := -1;
+      DoHalt := False;
       for Row in Pat^ do begin
         if DoBreak then Break;
+        if DoGoto <> -1 then Break;
+        if DoHalt then Break;
 
         DidEnvelope := False;
 
@@ -323,6 +346,12 @@ var
             end;
             etPatternSkip: begin
               DoBreak := True;
+            end;
+            etPatternGoto: begin
+              DoGoto := FX.Param;
+            end;
+            etPatternHalt: begin
+              DoHalt := True;
             end;
             etSfx: begin
               WriteLn(F, ' wave_noise_cutoff $', IntToHex(FX.Param, 2));
@@ -366,10 +395,19 @@ var
           end;
         end;
       end;
-    end;
 
-    if Waited > 0 then
-      Wait(Waited);
+      if Waited > 0 then
+        Wait(Waited);
+
+      Waited := 0;
+
+      if DoHalt then
+        WriteLn(F, ' chan_stop')
+      else if (DoGoto <> -1) then
+        WriteLn(F, 'call ', Lbl, '.P', DoGoto)
+      else
+        WriteLn(F, 'ret');
+    end;
   end;
 
 begin
@@ -427,7 +465,12 @@ begin
     Stream.ReadBuffer(TrackFormat, SizeOf(TTBMTrackFormat));
 
     New(Pat);
-    Pat^ := Default(TPattern);
+    //Pat^ := Default(TPattern);
+    SetLength(Pat^, SongFormat.RowsPerTrack+1);
+
+    for J := 0 to SongFormat.RowsPerTrack do
+      Pat^[J] := Default(TTBMTrackRow);
+
     for J := 0 to TrackFormat.Rows do begin
       Stream.ReadBuffer(RowFormat, SizeOf(TTBMRowFormat));
       Pat^[RowFormat.RowNo] := RowFormat.RowData;
@@ -446,20 +489,20 @@ begin
 
   WriteLn(F, SongLabel, '_Pulse1:');
   WriteLn(F, 'db $C4,$FF,$C0,', GetOptionValue('timer'));
-  Emit(0);
+  Emit(0, SongLabel+'_Pulse1');
   WriteLn(F, 'db $CE');
 
   WriteLn(F, SongLabel,'_Pulse2:');
-  Emit(1);
+  Emit(1, SongLabel+'_Pulse2');
   WriteLn(F, 'db $CE');
 
   WriteLn(F, SongLabel,'_Wave:');
   WriteLn(F, 'db $C1,$00');
-  Emit(2);
+  Emit(2, SongLabel+'_Wave');
   WriteLn(F, 'db $CE');
 
   WriteLn(F, SongLabel,'_Noise:');
-  Emit(3);
+  Emit(3, SongLabel+'_Noise');
   WriteLn(F, 'db $CE');
 
   WriteLn(StdErr, 'Used noise:');
