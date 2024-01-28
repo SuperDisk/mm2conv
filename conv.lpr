@@ -260,12 +260,16 @@ var
     OldOctave: Integer = -1;
     NoiseVal: Byte;
     DidEnvelope: Boolean;
+    DoBreak: Boolean;
   begin
     for I := Low(OrderMatrix[Ch]) to High(OrderMatrix[Ch])-1 do begin
       writeln('; pattern break');
       Pat := FetchPattern(Patterns, OrderMatrix[Ch, I]);
 
+      DoBreak := False;
       for Row in Pat^ do begin
+        if DoBreak then Break;
+
         DidEnvelope := False;
 
         if (not IsEmptyRow(Row)) and (Waited > 0) then begin
@@ -297,7 +301,9 @@ var
                   3: WriteLn(' duty_cycle $C0');
                 end;
             end;
-            //etPatternSkip: Break;
+            etPatternSkip: begin
+              DoBreak := True;
+            end;
           end;
         end;
 
@@ -307,20 +313,23 @@ var
           if (Row.Note = 85) then begin
             WriteLn(' silence $', TicksToCode(TicksPerRow));
           end else begin
+            if Row.Note = 0 then begin
+              if DidEnvelope then begin
+                if (Ch = 3) then
+                  WriteLn(' note $'+IntToHex(SetAdd(UsedNoise, NoiseVal), 1), TicksToCode(TicksPerRow))
+                else
+                  WriteLn(' note $'+IntToHex(Note, 1), TicksToCode(TicksPerRow));
+                Continue;
+              end else begin
+                Inc(Waited);
+                Continue;
+              end;
+            end;
+
             if (Ch = 3) then begin
-              NoiseVal := NoiseNoteTable[Row.Note];
+              NoiseVal := NoiseNoteTable[Row.Note-1];
               WriteLn(' note $'+IntToHex(SetAdd(UsedNoise, NoiseVal), 1), TicksToCode(TicksPerRow));
             end else begin
-              if Row.Note = 0 then begin
-                if DidEnvelope then begin
-                  WriteLn(' note $'+IntToHex(Note, 1), TicksToCode(TicksPerRow));
-                  Continue;
-                end else begin
-                  Inc(Waited);
-                  Continue;
-                end;
-              end;
-
               Note := (Row.Note - 1) mod 12;
               Octave := EnsureRange(((Row.Note - 1) div 12)+1, 1, 7);
 
