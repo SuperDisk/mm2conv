@@ -173,17 +173,6 @@ const
     $17,    $16,  $15,  $14,  $07,  $06,  $05,  $04,  $03,  $02,  $01,  $00    // 6
   );
 
-function TicksToCode(Ticks: Integer): String;
-var
-  W: TWait;
-begin
-  for W in Waits do
-    if W.Frames = Ticks then Exit(W.Code);
-
-  Result := 'D';
-end;
-
-
 function TStreamHelper.ReadLString: String;
 var
   Len: Word;
@@ -193,16 +182,6 @@ begin
   SetLength(Buf, Len);
   Self.ReadBuffer(Buf[0], Len);
   Result := UTF8CStringToUTF8String(@Buf[0], Len);
-end;
-
-function FetchPattern(M: TPatternMap; Idx: Integer): PPattern;
-begin
-  if M.IndexOf(Idx) <> -1 then
-    Result := M.KeyData[Idx]
-  else begin
-    New(Result);
-    M.Add(Idx, Result);
-  end;
 end;
 
 function IsEmptyRow(Row: TTBMTrackRow): Boolean;
@@ -263,6 +242,43 @@ var
 
   F: Text;
   SongLabel: String;
+
+  procedure WriteWithWaits(Command: String; Ticks: Integer);
+  var
+    W, Primary: TWait;
+  begin
+    for W in Waits do begin
+      if W.Frames <= Ticks then begin
+        WriteLn(F, Command, W.Code);
+        Primary := W;
+        Break;
+      end;
+    end;
+
+    if Primary.Frames <> Ticks then
+      for W in Waits do
+        if W.Frames = (Ticks - Primary.Frames) then begin
+          writeln(F, ' wait $', W.Code);
+          break;
+        end;
+  end;
+
+  function FetchPattern(M: TPatternMap; Idx: Integer): PPattern;
+  var
+    J: Integer;
+  begin
+    if M.IndexOf(Idx) <> -1 then
+      Result := M.KeyData[Idx]
+    else begin
+      New(Result);
+      SetLength(Result^, SongFormat.RowsPerTrack+1);
+
+      for J := 0 to SongFormat.RowsPerTrack do
+        Pat^[J] := Default(TTBMTrackRow);
+
+      M.Add(Idx, Result);
+    end;
+  end;
 
   procedure Wait(Rows: Integer);
   var
@@ -363,14 +379,14 @@ var
           Inc(Waited)
         else begin
           if (Row.Note = 85) then begin
-            WriteLn(F, ' silence $', TicksToCode(TicksPerRow));
+            WriteWithWaits(' silence $', TicksPerRow);
           end else begin
             if Row.Note = 0 then begin
               if DidEnvelope then begin
                 if (Ch = 3) then
-                  WriteLn(F, ' note $'+IntToHex(SetAdd(UsedNoise, NoiseVal), 1), TicksToCode(TicksPerRow))
+                  WriteWithWaits(' note $'+IntToHex(SetAdd(UsedNoise, NoiseVal), 1), TicksPerRow)
                 else
-                  WriteLn(F, ' note $'+IntToHex(Note, 1), TicksToCode(TicksPerRow));
+                  WriteWithWaits(' note $'+IntToHex(Note, 1), TicksPerRow);
                 Continue;
               end else begin
                 Inc(Waited);
@@ -380,7 +396,7 @@ var
 
             if (Ch = 3) then begin
               NoiseVal := NoiseNoteTable[Row.Note-1];
-              WriteLn(F, ' note $'+IntToHex(SetAdd(UsedNoise, NoiseVal), 1), TicksToCode(TicksPerRow));
+              WriteWithWaits(' note $'+IntToHex(SetAdd(UsedNoise, NoiseVal), 1), TicksPerRow);
             end else begin
               Note := (Row.Note - 1) mod 12;
               Octave := EnsureRange(((Row.Note - 1) div 12)+1, 1, 7);
@@ -388,7 +404,7 @@ var
               if (Octave <> OldOctave) then
                 WriteLn(F, ' octave $'+IntToHex(Octave, 1));
 
-              WriteLn(F, ' note $'+IntToHex(Note, 1), TicksToCode(TicksPerRow));
+              WriteWithWaits(' note $'+IntToHex(Note, 1), TicksPerRow);
 
               OldOctave := Octave;
             end;
