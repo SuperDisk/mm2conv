@@ -3,7 +3,7 @@ program conv;
 {$mode ObjFPC}{$H+}
 
 uses
-  Classes, SysUtils, LazUTF8, fgl, math, strutils, iostream, custapp;
+  Classes, SysUtils, LazUTF8, fgl, math, strutils, custapp;
 
 type
   ETBMException = class(Exception);
@@ -124,6 +124,17 @@ type
     etSetGlobalVolume = 22       // `Jxy` set global volume scale
   );
 
+  { TConvApp }
+
+  TConvApp = class(TCustomApplication)
+  protected
+    procedure DoRun; override;
+  public
+    constructor Create(TheOwner: TComponent); override;
+    destructor Destroy; override;
+    procedure WriteHelp; virtual;
+  end;
+
 const
   ContinuousEffects = [
     etArpeggio,
@@ -171,6 +182,7 @@ begin
   Result := 'D';
 end;
 
+
 function TStreamHelper.ReadLString: String;
 var
   Len: Word;
@@ -213,6 +225,9 @@ begin
   Result := High(S);
 end;
 
+{ TConvApp }
+
+procedure TConvApp.DoRun;
 var
   Stream: TStream;
   I, J: Integer;
@@ -234,6 +249,10 @@ var
   Pat: PPattern;
   Patterns: TPatternMap;
 
+  F: Text;
+  SongLabel: String;
+  ErrorMsg: String;
+
   procedure Wait(Rows: Integer);
   var
     Frames: Integer;
@@ -245,7 +264,7 @@ var
       for W in Waits do
         if W.Frames <= Frames then begin
           Dec(Frames, W.Frames);
-          Writeln(' wait $'+W.Code);
+          WriteLn(F, ' wait $'+W.Code);
           Break;
         end;
     end;
@@ -261,9 +280,10 @@ var
     NoiseVal: Byte;
     DidEnvelope: Boolean;
     DoBreak: Boolean;
+    I: Integer;
   begin
     for I := Low(OrderMatrix[Ch]) to High(OrderMatrix[Ch])-1 do begin
-      writeln('; pattern break');
+      WriteLn(F, '; pattern break');
       Pat := FetchPattern(Patterns, OrderMatrix[Ch, I]);
 
       DoBreak := False;
@@ -280,32 +300,32 @@ var
         for FX in Row.Effects do begin
           case TTBMEffectType(FX.EffectType) of
             etSetEnvelope: begin
-              WriteLn(' envelope $', IntToHex(FX.Param, 2));
+              WriteLn(F, ' envelope $', IntToHex(FX.Param, 2));
               DidEnvelope := True;
             end;
             etSetTimbre: begin
               if Ch = 2 then begin
                 case FX.Param of
-                  0: WriteLn(' wave_vol $00');
-                  1: WriteLn(' wave_vol $60');
-                  2: WriteLn(' wave_vol $40');
-                  3: WriteLn(' wave_vol $20');
+                  0: WriteLn(F, ' wave_vol $00');
+                  1: WriteLn(F, ' wave_vol $60');
+                  2: WriteLn(F, ' wave_vol $40');
+                  3: WriteLn(F, ' wave_vol $20');
                 end;
                 DidEnvelope := True;
               end
               else
                 case FX.Param of
-                  0: WriteLn(' duty_cycle $00');
-                  1: WriteLn(' duty_cycle $40');
-                  2: WriteLn(' duty_cycle $80');
-                  3: WriteLn(' duty_cycle $C0');
+                  0: WriteLn(F, ' duty_cycle $00');
+                  1: WriteLn(F, ' duty_cycle $40');
+                  2: WriteLn(F, ' duty_cycle $80');
+                  3: WriteLn(F, ' duty_cycle $C0');
                 end;
             end;
             etPatternSkip: begin
               DoBreak := True;
             end;
             etSfx: begin
-              WriteLn(' wave_noise_cutoff $', IntToHex(FX.Param, 2));
+              WriteLn(F, ' wave_noise_cutoff $', IntToHex(FX.Param, 2));
             end;
           end;
         end;
@@ -314,14 +334,14 @@ var
           Inc(Waited)
         else begin
           if (Row.Note = 85) then begin
-            WriteLn(' silence $', TicksToCode(TicksPerRow));
+            WriteLn(F, ' silence $', TicksToCode(TicksPerRow));
           end else begin
             if Row.Note = 0 then begin
               if DidEnvelope then begin
                 if (Ch = 3) then
-                  WriteLn(' note $'+IntToHex(SetAdd(UsedNoise, NoiseVal), 1), TicksToCode(TicksPerRow))
+                  WriteLn(F, ' note $'+IntToHex(SetAdd(UsedNoise, NoiseVal), 1), TicksToCode(TicksPerRow))
                 else
-                  WriteLn(' note $'+IntToHex(Note, 1), TicksToCode(TicksPerRow));
+                  WriteLn(F, ' note $'+IntToHex(Note, 1), TicksToCode(TicksPerRow));
                 Continue;
               end else begin
                 Inc(Waited);
@@ -331,15 +351,15 @@ var
 
             if (Ch = 3) then begin
               NoiseVal := NoiseNoteTable[Row.Note-1];
-              WriteLn(' note $'+IntToHex(SetAdd(UsedNoise, NoiseVal), 1), TicksToCode(TicksPerRow));
+              WriteLn(F, ' note $'+IntToHex(SetAdd(UsedNoise, NoiseVal), 1), TicksToCode(TicksPerRow));
             end else begin
               Note := (Row.Note - 1) mod 12;
               Octave := EnsureRange(((Row.Note - 1) div 12)+1, 1, 7);
 
               if (Octave <> OldOctave) then
-                WriteLn(' octave $'+IntToHex(Octave, 1));
+                WriteLn(F, ' octave $'+IntToHex(Octave, 1));
 
-              WriteLn(' note $'+IntToHex(Note, 1), TicksToCode(TicksPerRow));
+              WriteLn(F, ' note $'+IntToHex(Note, 1), TicksToCode(TicksPerRow));
 
               OldOctave := Octave;
             end;
@@ -353,10 +373,27 @@ var
   end;
 
 begin
-  TicksPerRow := StrToInt(ParamStr(2));
+  if (not HasOption('i', 'input')) or
+     (not HasOption('ticks')) or
+     (not HasOption('title')) or
+     (not HasOption('timer')) then begin
+       WriteHelp;
+       Terminate;
+       Exit;
+     end;
 
-  Stream := TIOStream.Create(iosInput);
-  //Stream := TFileStream.Create('gb2_digic.tbm', fmOpenRead);
+  // parse parameters
+  if HasOption('h', 'help') or (ParamCount = 0) then begin
+    WriteHelp;
+    Terminate;
+    Exit;
+  end;
+
+  TicksPerRow := StrToInt(GetOptionValue('ticks'));
+
+  Stream := TFileStream.Create(GetOptionValue('i', 'input'), fmOpenRead);
+  AssignFile(F, GetOptionValue('o', 'output'));
+  Rewrite(F);
 
   Stream.ReadBuffer(Header, SizeOf(TTBMHeader));
 
@@ -399,33 +436,62 @@ begin
   end;
 
   // Convert to bytecode
-  WriteLn('BGM_Title:');
-  WriteLn('dw BGM_Title_Pulse1');
-  WriteLn('dw BGM_Title_Pulse2');
-  WriteLn('dw BGM_Title_Wave');
-  WriteLn('dw BGM_Title_Noise');
+  SongLabel := GetOptionValue('title');
 
-  WriteLn('BGM_Title_Pulse1:');
-  WriteLn('db $C4,$FF,$C0,', ParamStr(1));
+  WriteLn(F, SongLabel, ':');
+  WriteLn(F, 'dw ',SongLabel,'_Pulse1');
+  WriteLn(F, 'dw ',SongLabel,'_Pulse2');
+  WriteLn(F, 'dw ',SongLabel,'_Wave');
+  WriteLn(F, 'dw ',SongLabel,'_Noise');
+
+  WriteLn(F, SongLabel, '_Pulse1:');
+  WriteLn(F, 'db $C4,$FF,$C0,', GetOptionValue('timer'));
   Emit(0);
-  WriteLn('db $CE');
+  WriteLn(F, 'db $CE');
 
-  WriteLn('BGM_Title_Pulse2:');
+  WriteLn(F, SongLabel,'_Pulse2:');
   Emit(1);
-  WriteLn('db $CE');
+  WriteLn(F, 'db $CE');
 
-  WriteLn('BGM_Title_Wave:');
-  WriteLn('db $C1,$00');
+  WriteLn(F, SongLabel,'_Wave:');
+  WriteLn(F, 'db $C1,$00');
   Emit(2);
-  WriteLn('db $CE');
+  WriteLn(F, 'db $CE');
 
-  WriteLn('BGM_Title_Noise:');
+  WriteLn(F, SongLabel,'_Noise:');
   Emit(3);
-  WriteLn('db $CE');
+  WriteLn(F, 'db $CE');
 
-  writeln(StdErr, 'Used noise:');
+  WriteLn(StdErr, 'Used noise:');
   for B in UsedNoise do
-    writeln(StdErr, 'db %', IntToBin(B, 8), ' ');
-end.
+    WriteLn(StdErr, 'db %', IntToBin(B, 8), ' ');
 
+  Close(F);
+  Terminate;
+end;
+
+constructor TConvApp.Create(TheOwner: TComponent);
+begin
+  inherited Create(TheOwner);
+  StopOnException := True;
+end;
+
+destructor TConvApp.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TConvApp.WriteHelp;
+begin
+  writeln(StdErr, 'Usage: mm2conv -i input -o output --ticks=6 --title="..." --timer=''$BB''');
+end;
+
+var
+  Application: TConvApp;
+begin
+  Application:=TConvApp.Create(nil);
+  Application.Title:='mm2conv';
+  Application.Run;
+  Application.Free;
+end.
 
