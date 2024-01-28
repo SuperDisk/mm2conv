@@ -3,7 +3,7 @@ program conv;
 {$mode ObjFPC}{$H+}
 
 uses
-  Classes, SysUtils, LazUTF8, fgl, math, strutils, iostream;
+  Classes, SysUtils, LazUTF8, fgl, math, strutils, iostream, custapp;
 
 type
   ETBMException = class(Exception);
@@ -303,6 +303,9 @@ var
             end;
             etPatternSkip: begin
               DoBreak := True;
+            end;
+            etSfx: begin
+              WriteLn(' wave_noise_cutoff $', IntToHex(FX.Param, 2));
             end;
           end;
         end;

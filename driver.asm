@@ -955,6 +955,10 @@ MACRO duty_cycle
   db $C1, \1
 ENDM
 
+MACRO wave_noise_cutoff
+  db $C1, \1
+ENDM
+
 MACRO wave_vol
   db $C2, \1
 ENDM
