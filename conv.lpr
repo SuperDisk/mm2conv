@@ -225,6 +225,7 @@ var
 
   UsedNoise: TByteArray;
   B: Byte;
+  NoiseSL: TStringList;
 
   Header: TTBMHeader;
   BlockHeader: TTBMBlockHeader;
@@ -442,6 +443,13 @@ begin
     Terminate;
     Exit;
   end;
+
+  NoiseSL := TStringList.Create;
+  NoiseSL.Delimiter := ',';
+  NoiseSL.DelimitedText := GetOptionValue('poly');
+  SetLength(UsedNoise, NoiseSL.Count);
+  for I := Low(UsedNoise) to High(UsedNoise) do
+    UsedNoise[I] := StrToInt(NoiseSL.Strings[I]);
 
   TicksPerRow := StrToInt(GetOptionValue('ticks'));
 
