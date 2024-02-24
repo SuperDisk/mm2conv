@@ -250,7 +250,7 @@ var
   begin
     for W in Waits do begin
       if W.Frames <= Ticks then begin
-        WriteLn(F, Command, W.Code, ' ; wanted ', ticks, ' remaining ', Ticks - W.Frames);
+        WriteLn(F, Command, W.Code);
         Exit(Ticks - W.Frames);
       end;
     end;
@@ -290,6 +290,21 @@ var
     end;
   end;
 
+  function UsedMoreThanOnce(Ch: Integer; Pattern: Integer): Boolean;
+  var
+    I: Integer;
+    Seen: Boolean = False;
+  begin
+    for I := Low(OrderMatrix[Ch]) to High(OrderMatrix[Ch])-1 do begin
+      if OrderMatrix[Ch, I] = Pattern then begin
+        if Seen then Exit(True);
+        Seen := True
+      end;
+    end;
+
+    Result := False;
+  end;
+
   procedure Emit(Ch: Integer; Lbl: String);
   var
     Octave: Integer;
@@ -311,6 +326,9 @@ var
     end;
 
     for I in UsedPatterns do begin
+      if UsedMoreThanOnce(Ch, I) then
+        OldOctave := -1;
+
       WriteLn(F, SongLabel, '_P',I,':');
       Pat := FetchPattern(Patterns, I);
 
