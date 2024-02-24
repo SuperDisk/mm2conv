@@ -244,24 +244,16 @@ var
   F: Text;
   SongLabel: String;
 
-  procedure WriteWithWaits(Command: String; Ticks: Integer);
+  function WriteWithWaits(Command: String; Ticks: Integer): Integer;
   var
-    W, Primary: TWait;
+    W: TWait;
   begin
     for W in Waits do begin
       if W.Frames <= Ticks then begin
-        WriteLn(F, Command, W.Code);
-        Primary := W;
-        Break;
+        WriteLn(F, Command, W.Code, ' ; wanted ', ticks, ' remaining ', Ticks - W.Frames);
+        Exit(Ticks - W.Frames);
       end;
     end;
-
-    if Primary.Frames <> Ticks then
-      for W in Waits do
-        if W.Frames = (Ticks - Primary.Frames) then begin
-          writeln(F, ' wait $', W.Code);
-          break;
-        end;
   end;
 
   function FetchPattern(M: TPatternMap; Idx: Integer): PPattern;
@@ -286,7 +278,7 @@ var
     Frames: Integer;
     W: TWait;
   begin
-    Frames := Rows * TicksPerRow;
+    Frames := Rows;
 
     while Frames > 0 do begin
       for W in Waits do
@@ -377,27 +369,27 @@ var
         end;
 
         if IsEmptyRow(Row) then
-          Inc(Waited)
+          Inc(Waited, TicksPerRow)
         else begin
           if (Row.Note = 85) then begin
-            WriteWithWaits(' silence $', TicksPerRow);
+            Inc(Waited, WriteWithWaits(' silence $', TicksPerRow));
           end else begin
             if Row.Note = 0 then begin
               if DidEnvelope then begin
                 if (Ch = 3) then
-                  WriteWithWaits(' note $'+IntToHex(SetAdd(UsedNoise, NoiseVal), 1), TicksPerRow)
+                  Inc(Waited, WriteWithWaits(' note $'+IntToHex(SetAdd(UsedNoise, NoiseVal), 1), TicksPerRow))
                 else
-                  WriteWithWaits(' note $'+IntToHex(Note, 1), TicksPerRow);
+                  Inc(Waited, WriteWithWaits(' note $'+IntToHex(Note, 1), TicksPerRow));
                 Continue;
               end else begin
-                Inc(Waited);
+                Inc(Waited, TicksPerRow);
                 Continue;
               end;
             end;
 
             if (Ch = 3) then begin
               NoiseVal := NoiseNoteTable[Row.Note-1];
-              WriteWithWaits(' note $'+IntToHex(SetAdd(UsedNoise, NoiseVal), 1), TicksPerRow);
+              Inc(Waited, WriteWithWaits(' note $'+IntToHex(SetAdd(UsedNoise, NoiseVal), 1), TicksPerRow));
             end else begin
               Note := (Row.Note - 1) mod 12;
               Octave := EnsureRange(((Row.Note - 1) div 12)+1, 1, 7);
@@ -405,7 +397,7 @@ var
               if (Octave <> OldOctave) then
                 WriteLn(F, ' octave $'+IntToHex(Octave, 1));
 
-              WriteWithWaits(' note $'+IntToHex(Note, 1), TicksPerRow);
+              Inc(Waited, WriteWithWaits(' note $'+IntToHex(Note, 1), TicksPerRow));
 
               OldOctave := Octave;
             end;
