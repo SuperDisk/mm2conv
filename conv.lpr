@@ -326,12 +326,10 @@ var
     end;
 
     for I in UsedPatterns do begin
-      if UsedMoreThanOnce(Ch, I) then
-        OldOctave := -1;
-
       WriteLn(F, SongLabel, '_P',I,':');
       Pat := FetchPattern(Patterns, I);
 
+      OldOctave := -1;
       DoBreak := False;
       DoGoto := -1;
       DoHalt := False;
