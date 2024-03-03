@@ -8,6 +8,7 @@
 *.lps
 lib/
 backup/
+trackerboy/
 
 conv
 bgm/
