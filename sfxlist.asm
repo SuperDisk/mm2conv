@@ -66,45 +66,52 @@ SFX_NoisePointer_Table:
     dw SFX_NoiseSilence11
     dw SFX_NoiseSilence12
 
-; -------- Sound Effect Format (Pulse 2) --------
+; ----------------------------------
+; |      SOUND EFFECT FORMAT       |
+; ----------------------------------
+; Only Pulse 2 and Noise are used for sound effects
+; (Pulse 1 and Wave lack their own SFX handling code entirely)
 ;
-;   -wx yz ## ##
+; Format : wx yz ## ##
 ;
-;   w = Duty cycle+Base speed
-;   (how "base speed" works to be determined, RMW2 only uses the "normal" ones)
-;   0 = 12.5%, normal
-;   1 = 12.5%, slow
-;   2 = 12.5%, slower
-;   3 = 12.5%, slowest
-;   4 = 25%, normal
-;   5 = 25%, slow
-;   6 = 25%, slower
-;   7 = 25%, slowest
-;   8 = 50%, normal
-;   9 = 50%, slow
-;   A = 50%, slower
-;   B = 50%, slowest
-;   C = 75%, normal
-;   D = 75%, slow
-;   E = 75%, slower
-;   F = 75%, slowest
+; ----w = Duty cycle+Base speed
+;     (how "base speed" works to be written, RMW2 only uses the "normal" ones)
+;     0 = 12.5%, normal
+;     1 = 12.5%, slow
+;     2 = 12.5%, slower
+;     3 = 12.5%, slowest
+;     4 = 25%, normal
+;     5 = 25%, slow
+;     6 = 25%, slower
+;     7 = 25%, slowest
+;     8 = 50%, normal
+;     9 = 50%, slow
+;     A = 50%, slower
+;     B = 50%, slowest
+;     C = 75%, normal
+;     D = 75%, slow
+;     E = 75%, slower
+;     F = 75%, slowest
+;     [NOISE] The speed changes but the duty does not (as duty is handled by the polynomial)
 ;
-;   x = How long a pitch lasts in frames
-;   0, 1-F are valid
-;	    0 = 256 Frames
-;	    1 = 1 Frame
-;	    2 = 2 Frames
-;	    etc..
-;	    E = 14 Frames
-;	    F = 15 Frames
+; ----x = How long a pitch lasts in frames
+;     0, 1-F are valid
+;         0 = 16 Frames(?)
+;         1 = 1  Frame
+;         2 = 2  Frames
+;         etc..
+;         E = 14 Frames
+;         F = 15 Frames
 ;
-;   yz = Base volume and fade
-;   Works the same way as the byte C2 reads for music
+; ----yz = Base volume and fade
+;     Works the same way as the byte C2 reads for music
 ;
-;   ## ## = Desired pitch	
-;   Any of the valid GB channel frequencies (in little-endian format)
+; ----## ## = Desired pitch
+; [PULSE 2] Any of the valid GB channel frequencies (in native hardware little-endian format)
+; [ NOISE ] The first byte can be any polynomial while the second byte is ignored (left as $00)
 ;
-; -------- Sound Effect Format (Noise) --------
-;
-;   Currently unknown
-;
+; NOTE:
+; All sound effects are given a priority relative to their ID according to a list (currently listed
+; as "unknown_table" in driver.asm in the src)
+; It has not yet been examined in detail but it's presumed the higher the number, the more priority
+; e.g $08 > $05 so SFX with priority $08 will replace a sound with priority $05 if one was playing

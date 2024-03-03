@@ -97,7 +97,7 @@ Low Nybble: Note length
 ─────────────────────────────────────────────────────────
 C0 : Timer speed (1 byte) [PULSE 1 ONLY]
     (how the GB timer functions exactly to be written)
-	Changes how fast the song processes note lengths
+  Changes how fast the song processes note lengths
     and delays
 
     $BB is closest to 60hz and is recommended for custom
@@ -148,7 +148,7 @@ C4 : Panning [PULSE 1 ONLY]
     Pans channels, SFX are also panned instead of corrected
     (which is likely why all tracks are set to mono [$FF])
     If a bit for a channel is set on both sides, the channel is
-	centered instead
+  centered instead
     If no bits for a channel are set, then it's silent
 ─────────────────────────────────────────────────────────
 C9 : Return from subroutine
@@ -161,7 +161,7 @@ Returns from CD (see below) and continues the sequence where it left off
 CD : Jump to subroutine (2 bytes)
 
     Jumps to a sub-sequence offset (or Label in src), used to save space
-    Sub-sequences are usually located at the end of one channel's sequence 
+    Sub-sequences are usually located at the end of one channel's sequence
     (typically after a C3 jump) and end with C9 (return)
 
     Conveniently, CD is the CALL opcode on Game Boy hardware,
@@ -252,7 +252,7 @@ Format : wx yz ## ##
 ----yz = Base volume and fade
     Works the same way as the byte C2 reads for music
 
-----## ## = Desired pitch	
+----## ## = Desired pitch
 [PULSE 2] Any of the valid GB channel frequencies (in native hardware little-endian format)
 [ NOISE ] The first byte can be any polynomial while the second byte is ignored (left as $00)
 
