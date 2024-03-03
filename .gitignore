@@ -6,6 +6,7 @@
 *.dll
 *.wav
 *.lps
+*.tbm
 lib/
 backup/
 trackerboy/
