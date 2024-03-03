@@ -558,7 +558,7 @@ end;
 
 procedure TConvApp.WriteHelp;
 begin
-  writeln(StdErr, 'Usage: mm2conv -i input -o output --ticks=6 --title="..." --timer=''$BB''');
+  writeln(StdErr, 'Usage: mm2conv -i input -o output --ticks=6 --title="..." --timer=''$BB'' --poly="1,2,3,..."');
 end;
 
 var
