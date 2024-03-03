@@ -1,6 +1,6 @@
 # MM2Conv
 
-This is a program which converts [TrackerBoy TBM](https://www.trackerboy.org/) modules into a format usable by the [Rabbit GB sound driver.](https://www.vgmpf.com/Wiki/index.php?title=Giraffe_Soft_(Sound_Driver)).
+This is a program which converts [TrackerBoy TBM](https://www.trackerboy.org/) modules into a format usable by the [Rabbit GB sound driver.](https://www.vgmpf.com/Wiki/index.php?title=Giraffe_Soft_(Sound_Driver))
 
 # Usage
 
