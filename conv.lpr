@@ -314,7 +314,8 @@ var
     OldOctave: Integer = -1;
     NoiseVal: Byte;
     DidEnvelope: Boolean;
-    DoBreak, DoHalt: Boolean;
+    DoBreak, DoHalt, DoDelayedCut: Boolean;
+    DelayedBy: Integer;
     DoGoto: Integer;
     I: Integer;
 
@@ -333,20 +334,29 @@ var
       DoBreak := False;
       DoGoto := -1;
       DoHalt := False;
+      DoDelayedCut := False;
+      DelayedBy := 0;
+
       for Row in Pat^ do begin
         if DoBreak then Break;
         if DoGoto <> -1 then Break;
         if DoHalt then Break;
 
-        DidEnvelope := False;
+        DoDelayedCut := False;
+        DelayedBy := 0;
 
-        if (not IsEmptyRow(Row)) and (Waited > 0) then begin
-          Wait(Waited);
-          Waited := 0;
-        end;
+        DidEnvelope := False;
 
         for FX in Row.Effects do begin
           case TTBMEffectType(FX.EffectType) of
+            etDelayedCut: begin
+              DelayedBy := TicksPerRow - FX.Param;
+              DoDelayedCut := True;
+            end;
+            etDelayedNote: begin
+              Inc(Waited, FX.Param);
+              DelayedBy := FX.Param;
+            end;
             etSetEnvelope: begin
               WriteLn(F, ' envelope $', IntToHex(FX.Param, 2));
               DidEnvelope := True;
@@ -387,36 +397,44 @@ var
         if IsEmptyRow(Row) then
           Inc(Waited, TicksPerRow)
         else begin
-          if (Row.Note = 85) then begin
-            Inc(Waited, WriteWithWaits(' silence $', TicksPerRow));
-          end else begin
-            if Row.Note = 0 then begin
+          if Waited > 0 then begin
+            Wait(Waited);
+            Waited := 0;
+          end;
+
+          case Row.Note of
+            85: Inc(Waited, WriteWithWaits(' silence $', TicksPerRow - DelayedBy));
+            0: begin
               if DidEnvelope then begin
                 if (Ch = 3) then
-                  Inc(Waited, WriteWithWaits(' note $'+IntToHex(SetAdd(UsedNoise, NoiseVal), 1), TicksPerRow))
+                  Inc(Waited, WriteWithWaits(' note $'+IntToHex(SetAdd(UsedNoise, NoiseVal), 1), TicksPerRow - DelayedBy))
                 else
-                  Inc(Waited, WriteWithWaits(' note $'+IntToHex(Note, 1), TicksPerRow));
-                Continue;
+                  Inc(Waited, WriteWithWaits(' note $'+IntToHex(Note, 1), TicksPerRow - DelayedBy));
+              end else
+                Inc(Waited, TicksPerRow - DelayedBy);
+            end;
+            else begin
+              if (Ch = 3) then begin
+                NoiseVal := NoiseNoteTable[Row.Note-1];
+                Inc(Waited, WriteWithWaits(' note $'+IntToHex(SetAdd(UsedNoise, NoiseVal), 1), TicksPerRow - DelayedBy));
               end else begin
-                Inc(Waited, TicksPerRow);
-                Continue;
+                Note := (Row.Note - 1) mod 12;
+                Octave := EnsureRange(((Row.Note - 1) div 12)+1, 1, 7);
+
+                if (Octave <> OldOctave) then
+                  WriteLn(F, ' octave $'+IntToHex(Octave, 1));
+
+                Inc(Waited, WriteWithWaits(' note $'+IntToHex(Note, 1), TicksPerRow - DelayedBy));
+
+                OldOctave := Octave;
               end;
             end;
+          end;
 
-            if (Ch = 3) then begin
-              NoiseVal := NoiseNoteTable[Row.Note-1];
-              Inc(Waited, WriteWithWaits(' note $'+IntToHex(SetAdd(UsedNoise, NoiseVal), 1), TicksPerRow));
-            end else begin
-              Note := (Row.Note - 1) mod 12;
-              Octave := EnsureRange(((Row.Note - 1) div 12)+1, 1, 7);
-
-              if (Octave <> OldOctave) then
-                WriteLn(F, ' octave $'+IntToHex(Octave, 1));
-
-              Inc(Waited, WriteWithWaits(' note $'+IntToHex(Note, 1), TicksPerRow));
-
-              OldOctave := Octave;
-            end;
+          if DoDelayedCut then begin
+            Wait(Waited);
+            Waited := 0;
+            Inc(Waited, WriteWithWaits(' silence $', DelayedBy));
           end;
         end;
       end;
